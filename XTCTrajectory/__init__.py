@@ -5,5 +5,6 @@
 #                          Mikolaj J. Feliks (2014)
 # . License   : CeCILL French Free Software License     (http://www.cecill.info)
 #-------------------------------------------------------------------------------
-"""A module for reading trajectories from XTC files of Gromacs."""
+"""A module for reading and writing trajectories in the Gromacs' XTC format."""
 
+from XTCTrajectoryFileReader        import XTCTrajectory_ToSystemGeometryTrajectory, XTCTrajectoryFileReader
