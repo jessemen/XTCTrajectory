@@ -1,25 +1,29 @@
 PDYNAMO_PCORE = /home/mikolaj/local/opt/pDynamo-1.8.0/pCore-1.8.0
 PY_INCLUDE    = /usr/include/python2.7
+C_SOURCE      = ../csource
 CFLAGS        = -fPIC -c -I$(PDYNAMO_PCORE)/extensions/cinclude -I$(PY_INCLUDE) -I../cinclude 
 CC            = gcc
 
 default: XTCTrajectoryFileReader.so
 	@echo "\n*** Use 'make clean_all' and then 'make' if you want to recompile Cython sources ***\n"
 
-../csource/xdrfile_xtc.o:
-	+$(MAKE) -C ../csource
+$(C_SOURCE)/helpers.o:
+	+$(MAKE) -C $(C_SOURCE)
 
-../csource/xdrfile.o:
-	+$(MAKE) -C ../csource
+$(C_SOURCE)/xdrfile_xtc.o:
+	+$(MAKE) -C $(C_SOURCE)
 
-XTCTrajectoryFileReader.so: ../csource/xdrfile.o ../csource/xdrfile_xtc.o XTCTrajectory.XTCTrajectoryFileReader.o
-	$(CC) -shared XTCTrajectory.XTCTrajectoryFileReader.o ../csource/xdrfile.o ../csource/xdrfile_xtc.o -o XTCTrajectoryFileReader.so
+$(C_SOURCE)/xdrfile.o:
+	+$(MAKE) -C $(C_SOURCE)
 
-XTCTrajectory.XTCTrajectoryFileReader.c: XTCTrajectory.XTCTrajectoryFileReader.pyx XTCTrajectory.XTCTrajectoryFileReader.pxd
-	python cython_compile.py  $(PDYNAMO_PCORE)
+XTCTrajectoryFileReader.so: $(C_SOURCE)/helpers.o $(C_SOURCE)/xdrfile.o $(C_SOURCE)/xdrfile_xtc.o XTCTrajectoryFileReader.o
+	$(CC) -shared $(C_SOURCE)/helpers.o $(C_SOURCE)/xdrfile.o $(C_SOURCE)/xdrfile_xtc.o XTCTrajectoryFileReader.o -o XTCTrajectoryFileReader.so
 
-XTCTrajectory.XTCTrajectoryFileReader.o: XTCTrajectory.XTCTrajectoryFileReader.c
-	$(CC) $(CFLAGS) XTCTrajectory.XTCTrajectoryFileReader.c -o XTCTrajectory.XTCTrajectoryFileReader.o
+XTCTrajectoryFileReader.c: XTCTrajectoryFileReader.pyx XTCTrajectoryFileReader.pxd
+	python cython_compile.py $(PDYNAMO_PCORE)
+
+XTCTrajectoryFileReader.o: XTCTrajectoryFileReader.c
+	$(CC) $(CFLAGS) XTCTrajectoryFileReader.c -o XTCTrajectoryFileReader.o
 
 install: XTCTrajectoryFileReader.so
 	mv XTCTrajectoryFileReader.so ../../XTCTrajectory/
@@ -27,7 +31,7 @@ install: XTCTrajectoryFileReader.so
 clean:
 	if [ -e XTCTrajectoryFileReader.o  ] ; then rm XTCTrajectoryFileReader.o  ; fi
 	if [ -e XTCTrajectoryFileReader.so ] ; then rm XTCTrajectoryFileReader.so ; fi
-	+$(MAKE) -C ../csource clean
+	+$(MAKE) -C $(C_SOURCE) clean
 
 clean_all: clean
 	if [ -e XTCTrajectoryFileReader.c  ] ; then rm XTCTrajectoryFileReader.c  ; fi
