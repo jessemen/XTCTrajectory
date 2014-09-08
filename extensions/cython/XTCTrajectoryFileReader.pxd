@@ -6,7 +6,7 @@
 # . License   : CeCILL French Free Software License     (http://www.cecill.info)
 #-------------------------------------------------------------------------------
 from libc                cimport stdlib
-from pCore.cDefinitions  cimport Integer, Real
+from pCore.cDefinitions  cimport Integer, Real, Boolean
 from pCore.Coordinates3  cimport Coordinates3
 
 # from pCore.Memory           cimport Memory_Allocate_Array
@@ -42,8 +42,10 @@ cdef extern from "Coordinates3.h":
 
 
 #-------------------------------------------------------------------------------
-cdef extern from "helpers.h":
-    cdef void CopyRvecToCoordinates3 (rvec *source, CCoordinates3 *destination, int natoms)
+cdef extern from "wrapper.h":
+    cdef rvec *Buffer_Allocate (Integer natoms)
+    cdef void Buffer_Deallocate (rvec **buffer)
+    cdef Boolean ReadXTCFrame_ToCoordinates3 (CXDRFILE *xd, CCoordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step)
 
 
 #-------------------------------------------------------------------------------

@@ -24,14 +24,15 @@ cdef class XTCTrajectoryFileReader:
 
     def __dealloc__ (self):
         """Finalization."""
+        cdef rvec *buffer
+        buffer = self.buffer
+        Buffer_Deallocate (&buffer)
         self.Close ()
-        if (self.frame != NULL):
-            stdlib.free (self.frame)
-
+        
 
     def __init__ (self, path, owner):
         """Constructor."""
-        cdef rvec *frame
+        cdef rvec *buffer
         cdef int   natoms
         cdef int   status
 
@@ -40,13 +41,13 @@ cdef class XTCTrajectoryFileReader:
         if status != 0:
             raise CLibraryError ("Cannot read the number of atoms from %s" % path)
 
-        frame = <rvec *> stdlib.malloc (sizeof (rvec) * natoms)
+        buffer = Buffer_Allocate (natoms)
         if frame == NULL:
             raise CLibraryError ("Cannot allocate frame buffer.")
 
         self.path    = path
         self.owner   = owner
-        self.frame   = frame
+        self.buffer  = buffer
         self.natoms  = natoms
         self.nframes = 0
         self.Open ()
@@ -103,31 +104,29 @@ cdef class XTCTrajectoryFileReader:
 
     def RestoreOwnerData (self):
         """Restore data from a frame to the owner."""
-        cdef Coordinates3  coor
-        cdef matrix        box
-        cdef float         time
-        cdef float         prec
-        cdef int           step
-        cdef int           status
+        cdef Boolean        result
+        cdef Integer        natoms
+        cdef Integer        step
+        cdef Coordinates3   coor
+        cdef rvec           *buffer
 
-        # Allocate and deallocate the frame every time here?
+        natoms  = self.natoms
+        rvec    = self.buffer
+        coor    = self.owner.coordinates3
+        xdrfile = self.xdrfile
 
-        status = read_xtc (self.xdrfile, self.natoms, &step, &time, box, self.frame, &prec)
+        result = ReadXTCFrame_ToCoordinates3 (xdrfile, coor, buffer, natoms, &step)
+        return result
+
+        # status = read_xtc (self.xdrfile, self.natoms, &step, &time, box, self.frame, &prec)
         # Finished reading the trajectory?
-        if status != 0:
-            return False
+        # if status != 0:
+        #    return False
 
         # How to use exdrOK here?
         #if status != 0:
         #    raise CLibraryError ("Error while reading XTC file.")
-
-        coor = self.owner.coordinates3
-
-        CopyRvecToCoordinates3 (self.frame, coor.cObject, self.natoms)
-
-        return True
-
-
+        # coor = self.owner.coordinates3
 
 
 #         coor = self.owner.coordinates3
