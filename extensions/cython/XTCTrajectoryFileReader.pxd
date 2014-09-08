@@ -6,7 +6,7 @@
 # . License   : CeCILL French Free Software License     (http://www.cecill.info)
 #-------------------------------------------------------------------------------
 from libc                cimport stdlib
-from pCore.cDefinitions  cimport Real
+from pCore.cDefinitions  cimport Integer, Real
 from pCore.Coordinates3  cimport Coordinates3
 
 # from pCore.Memory           cimport Memory_Allocate_Array
@@ -17,6 +17,7 @@ from pCore.Coordinates3  cimport Coordinates3
 # from pCore.Real2DArray      cimport CReal2DArray, Real2DArray
 
 
+#-------------------------------------------------------------------------------
 cdef extern from "xdrfile.h":
     ctypedef float  matrix[3][3]
     ctypedef float  rvec[3]
@@ -26,18 +27,23 @@ cdef extern from "xdrfile.h":
     cdef CXDRFILE *xdrfile_open  (char *path, char *mode)
 
 
+#-------------------------------------------------------------------------------
 cdef extern from "xdrfile_xtc.h":
     cdef int       read_xtc_natoms (char *fn, int *natoms)
     cdef int       read_xtc        (CXDRFILE *xd, int natoms, int *step, float *time, matrix box, rvec *x, float *prec)
     cdef int       write_xtc       (CXDRFILE *xd, int natoms, int  step, float  time, matrix box, rvec *x, float  prec)
 
 
+#-------------------------------------------------------------------------------
 cdef extern from "Coordinates3.h":
     ctypedef struct CCoordinates3 "Coordinates3"
 
+    cdef CCoordinates3    *Coordinates3_Allocate (Integer extent)
 
+
+#-------------------------------------------------------------------------------
 cdef extern from "helpers.h":
-    cdef void copy_coor (rvec *source, CCoordinates3 *destination, int natoms)
+    cdef void CopyRvecToCoordinates3 (rvec *source, CCoordinates3 *destination, int natoms)
 
 
 #-------------------------------------------------------------------------------

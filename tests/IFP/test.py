@@ -1,7 +1,7 @@
 # Example script for the XTCTrajectory module
 
 from pCore         import logFile
-from pBabel        import CHARMMParameterFiles_ToParameters, CHARMMPSFFile_ToSystem
+from pBabel        import CHARMMParameterFiles_ToParameters, CHARMMPSFFile_ToSystem, XYZFile_ToCoordinates3, XYZFile_FromSystem
 from XTCTrajectory import XTCTrajectoryFileReader
 
 
@@ -15,14 +15,23 @@ parameters = (
 )
 
 mol = CHARMMPSFFile_ToSystem ("parent_waterbox.psf", isXPLOR = True, parameters = CHARMMParameterFiles_ToParameters (parameters))
+
+mol.coordinates3 = XYZFile_ToCoordinates3 ("geometry.xyz")
+
 mol.Summary ()
 
 trajectory = XTCTrajectoryFileReader ("heat.xtc", mol)
 trajectory.Summary ()
 trajectory.RestoreOwnerData ()
 
-# while trajectory.RestoreOwnerData ():
-#     pass
+frameCount = 0
+
+while trajectory.RestoreOwnerData ():
+    logFile.Text ("Loading frame %d\n" % frameCount)
+
+    #XYZFile_FromSystem ("dump%0d.xyz" % frameCount, mol)
+
+    frameCount += 1
 
 
 #===========================================================

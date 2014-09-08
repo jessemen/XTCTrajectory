@@ -110,6 +110,8 @@ cdef class XTCTrajectoryFileReader:
         cdef int           step
         cdef int           status
 
+        # Allocate and deallocate the frame every time here?
+
         status = read_xtc (self.xdrfile, self.natoms, &step, &time, box, self.frame, &prec)
         # Finished reading the trajectory?
         if status != 0:
@@ -119,13 +121,39 @@ cdef class XTCTrajectoryFileReader:
         #if status != 0:
         #    raise CLibraryError ("Error while reading XTC file.")
 
-        # coor         = Coordinates3.Raw ()
-        # coor.isOwner = True
         coor = self.owner.coordinates3
 
-        copy_coor (self.frame, coor.cObject, self.natoms)
+        CopyRvecToCoordinates3 (self.frame, coor.cObject, self.natoms)
 
         return True
+
+
+
+
+#         coor = self.owner.coordinates3
+#         if coor is None:
+#             coor = Coordinates3_Allocate (self.natoms)
+#             if coor is not None:
+#                 self.owner.coordinates3 = coor
+#             else:
+#                 raise CLibraryError ("Cannot allocate coordinates for the owner.")
+
+
+#     def RestoreOwnerData ( self ):
+#         """Restore data from a frame to the owner."""
+#         try:
+#             if self.currentFrame >= self.numberOfFrames: raise EOFError
+#             DCDStatus_Check ( DCDRead_Frame ( self.cObject ) )
+#             return True
+#         except EOFError:
+#             DCDStatus_Check ( DCDRead_GotoFrame ( self.cObject, 0 ) )
+#             return False
+# 
+#     property currentFrame:
+#         def __get__ ( self ): return DCDHandle_CurrentFrame ( self.cObject )
+# 
+#     property numberOfFrames:
+#         def __get__ ( self ): return DCDHandle_NumberOfFrames ( self.cObject )
 
 
 #===============================================================================
