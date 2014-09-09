@@ -22,6 +22,6 @@ extern rvec *Buffer_Allocate (Integer natoms);
 
 extern void Buffer_Deallocate (rvec **buffer);
 
-extern Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step);
+extern Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step);
 
 #endif

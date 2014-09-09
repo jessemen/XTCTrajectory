@@ -2,7 +2,9 @@
 
 from pCore         import logFile
 from pBabel        import CHARMMParameterFiles_ToParameters, CHARMMPSFFile_ToSystem, XYZFile_ToCoordinates3, XYZFile_FromSystem
-from XTCTrajectory import XTCTrajectoryFileReader
+from XTCTrajectory import XTCTrajectoryFileReader, XTCTrajectory_ToSystemGeometryTrajectory
+
+import os
 
 
 #===========================================================
@@ -20,18 +22,23 @@ mol.coordinates3 = XYZFile_ToCoordinates3 ("geometry.xyz")
 
 mol.Summary ()
 
+
+
 trajectory = XTCTrajectoryFileReader ("heat.xtc", mol)
 trajectory.Summary ()
-trajectory.RestoreOwnerData ()
-
-frameCount = 0
 
 while trajectory.RestoreOwnerData ():
-    logFile.Text ("Loading frame %d\n" % frameCount)
+    logFile.Text ("Frame count: %d\n" % trajectory.currentFrame)
+    #XYZFile_FromSystem ("sav%3d.xyz" % trajectory.currentFrame, mol)
 
-    #XYZFile_FromSystem ("dump%0d.xyz" % frameCount, mol)
 
-    frameCount += 1
+#===========================================================
+direc = "traj"
+
+if not os.path.exists (direc):
+    os.makedirs (direc)
+
+XTCTrajectory_ToSystemGeometryTrajectory ("heat.xtc", direc, mol)
 
 
 #===========================================================

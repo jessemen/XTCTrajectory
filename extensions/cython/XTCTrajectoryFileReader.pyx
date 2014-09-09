@@ -19,37 +19,41 @@ cdef class XTCTrajectoryFileReader:
 
 
     def __len__ (self):
-        return self.nframes
+        return self.numberOfFrames
 
 
     def __dealloc__ (self):
         """Finalization."""
-        cdef rvec *buffer
-        buffer = self.buffer
-        Buffer_Deallocate (&buffer)
+        Buffer_Deallocate (&self.fb)
         self.Close ()
-        
+
 
     def __init__ (self, path, owner):
         """Constructor."""
-        cdef rvec *buffer
-        cdef int   natoms
-        cdef int   status
+        cdef Integer  numberOfAtoms
+        cdef Integer  status
 
-        # How to use exdrOK here?
-        status = read_xtc_natoms (path, &natoms)
+        if owner.coordinates3 is None:
+            raise CLibraryError ("Allocate system coordinates first.")
+
+        # How to use exdrOK here? (exdrOK = 0)
+        status = read_xtc_natoms (path, &numberOfAtoms)
         if status != 0:
             raise CLibraryError ("Cannot read the number of atoms from %s" % path)
 
-        buffer = Buffer_Allocate (natoms)
-        if frame == NULL:
+        systemNumberOfAtoms = len (owner.atoms)
+        if (numberOfAtoms != systemNumberOfAtoms):
+            raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (systemNumberOfAtoms, numberOfAtoms))
+
+        self.fb = Buffer_Allocate (numberOfAtoms)
+        if self.fb == NULL:
             raise CLibraryError ("Cannot allocate frame buffer.")
 
-        self.path    = path
-        self.owner   = owner
-        self.buffer  = buffer
-        self.natoms  = natoms
-        self.nframes = 0
+        self.path           = path
+        self.owner          = owner
+        self.numberOfAtoms  = numberOfAtoms
+        self.numberOfFrames = 0
+        self.currentFrame   = 0
         self.Open ()
         # self._Initialize     ()
         # self._Allocate       ()
@@ -61,15 +65,15 @@ cdef class XTCTrajectoryFileReader:
         if self.isOpen:
             xdrfile_close (self.xdrfile)
             self.isOpen = False
-        else:
-            raise CLibraryError ("Cannot close file.")
+        #else:
+        #    raise CLibraryError ("Cannot close file.")
 
 
     def Open (self):
         """Open the file."""
         cdef char *path
         if self.isOpen:
-            raise CLibraryError ("Cannot open file.")
+            raise CLibraryError ("File has already been opened.")
         else:
             path = self.path
             self.xdrfile = xdrfile_open (path, "r")
@@ -84,8 +88,8 @@ cdef class XTCTrajectoryFileReader:
             if self.isOpen:
                 summary = log.GetSummary ()
                 summary.Start ("XTC file")
-                summary.Entry ("Number of Atoms",  "%s" % self.natoms)
-                summary.Entry ("Number of Frames", "%s" % self.nframes)
+                summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)
+                summary.Entry ("Number of Frames", "%s" % self.numberOfFrames)
                 summary.Stop ()
 
 
@@ -93,9 +97,11 @@ cdef class XTCTrajectoryFileReader:
         """Read the trajectory footer."""
         pass
 
+
     def ReadHeader (self):
         """Read the trajectory header."""
         pass
+
 
     def AssignOwnerData (self):
         """Assign owner data to the trajectory."""
@@ -104,55 +110,20 @@ cdef class XTCTrajectoryFileReader:
 
     def RestoreOwnerData (self):
         """Restore data from a frame to the owner."""
+        cdef Coordinates3   coordinates3
         cdef Boolean        result
-        cdef Integer        natoms
+        cdef Integer        numberOfAtoms
         cdef Integer        step
-        cdef Coordinates3   coor
-        cdef rvec           *buffer
+        numberOfAtoms = self.numberOfAtoms
+        coordinates3  = self.owner.coordinates3
 
-        natoms  = self.natoms
-        rvec    = self.buffer
-        coor    = self.owner.coordinates3
-        xdrfile = self.xdrfile
+        result = ReadXTCFrame_ToCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, numberOfAtoms, &step)
+        self.currentFrame = step
 
-        result = ReadXTCFrame_ToCoordinates3 (xdrfile, coor, buffer, natoms, &step)
+        if result != True:
+            self.numberOfFrames = step - 1
+        # Returns True or False
         return result
-
-        # status = read_xtc (self.xdrfile, self.natoms, &step, &time, box, self.frame, &prec)
-        # Finished reading the trajectory?
-        # if status != 0:
-        #    return False
-
-        # How to use exdrOK here?
-        #if status != 0:
-        #    raise CLibraryError ("Error while reading XTC file.")
-        # coor = self.owner.coordinates3
-
-
-#         coor = self.owner.coordinates3
-#         if coor is None:
-#             coor = Coordinates3_Allocate (self.natoms)
-#             if coor is not None:
-#                 self.owner.coordinates3 = coor
-#             else:
-#                 raise CLibraryError ("Cannot allocate coordinates for the owner.")
-
-
-#     def RestoreOwnerData ( self ):
-#         """Restore data from a frame to the owner."""
-#         try:
-#             if self.currentFrame >= self.numberOfFrames: raise EOFError
-#             DCDStatus_Check ( DCDRead_Frame ( self.cObject ) )
-#             return True
-#         except EOFError:
-#             DCDStatus_Check ( DCDRead_GotoFrame ( self.cObject, 0 ) )
-#             return False
-# 
-#     property currentFrame:
-#         def __get__ ( self ): return DCDHandle_CurrentFrame ( self.cObject )
-# 
-#     property numberOfFrames:
-#         def __get__ ( self ): return DCDHandle_NumberOfFrames ( self.cObject )
 
 
 #===============================================================================

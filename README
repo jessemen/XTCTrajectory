@@ -1,0 +1,13 @@
+XTCTrajectory is a simple pDynamo module for reading and 
+writing trajectory files in the compressed XTC format of Gromacs.
+
+For installation instructions, see the file INSTALL.
+
+For questions and comments, contact: mikolaj.feliks@gmail.com
+
+Resources:
+- xdrfile library
+http://www.gromacs.org/Developer_Zone/Programming_Guide/XTC_Library
+
+- pDynamo
+http://pdynamo.org

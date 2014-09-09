@@ -7,6 +7,46 @@
 !-----------------------------------------------------------------------------*/
 #include "wrapper.h"
 
+
+rvec *Buffer_Allocate (Integer natoms) {
+    rvec *fb;
+
+    MEMORY_ALLOCATEARRAY (fb, natoms, rvec);
+    return fb; /* If failed, NULL is returned */
+}
+
+void Buffer_Deallocate (rvec **fb) {
+    if ((fb != NULL) && (*fb != NULL)) {
+        MEMORY_DEALLOCATE (*fb);
+    }
+
+    /* If deallocation fails, do nothing */
+}
+
+Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step) {
+    Real    *d = coordinates3->data;
+    Integer atomindex;
+
+    /* xdrfile variables */
+    float   *s = (float *) fb;
+    float   time;
+    float   prec;
+    matrix  box;
+
+    if (read_xtc (xd, natoms, step, &time, box, fb, &prec) != exdrOK) {
+        return False;
+    }
+
+    /* Copy converting floats to Reals (doubles) */
+    for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
+        *(d    ) = (Real) *(s    );
+        *(d + 1) = (Real) *(s + 1);
+        *(d + 2) = (Real) *(s + 2);
+    }
+
+    return True;
+}
+
 /*
 enum { exdrOK, exdrHEADER, exdrSTRING, exdrDOUBLE, 
     exdrINT, exdrFLOAT, exdrUINT, exdr3DX, exdrCLOSE, exdrMAGIC,
@@ -28,40 +68,3 @@ char *exdr_message[exdrNR] = {
     "File not found" 
 };
 */
-
-rvec *Buffer_Allocate (Integer natoms) {
-    rvec *buffer;
-
-    MEMORY_ALLOCATEARRAY (buffer, natoms, rvec) ;
-    return buffer;
-}
-
-void Buffer_Deallocate (rvec **buffer) {
-    if ((buffer != NULL) && (*buffer != NULL)) {
-        MEMORY_DEALLOCATE (*buffer);
-    }
-}
-
-Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step) {
-    Real    *d = coordinates3->data;
-    Integer atomindex;
-
-    /* xdrfile variables */
-    float   *s = (float *) buffer;
-    float   time;
-    float   prec;
-    matrix  box;
-
-    if (read_xtc (xd, natoms, step, &time, box, buffer, &prec) != exdrOK) {
-        return False;
-    }
-
-    /* Copy converting floats to doubles */
-    for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
-        *(d    ) = *(s    );
-        *(d + 1) = *(s + 1);
-        *(d + 2) = *(s + 2);
-    }
-
-    return True;
-}
