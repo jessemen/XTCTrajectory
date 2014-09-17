@@ -18,10 +18,12 @@
 #include "Coordinates3.h"
 
 
-extern rvec *Buffer_Allocate (Integer natoms);
+extern rvec     *Buffer_Allocate                 (Integer natoms);
 
-extern void Buffer_Deallocate (rvec **buffer);
+extern void      Buffer_Deallocate               (rvec **buffer);
 
-extern Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step);
+extern Boolean   ReadXTCFrame_ToCoordinates3     (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step);
+
+extern Boolean   WriteXTCFrame_FromCoordinates3  (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer  step, Integer prec);
 
 #endif

@@ -230,8 +230,8 @@
 #define _USE_MATH_DEFINES
 #endif
 #include <math.h>
-#define __PYX_HAVE__XTCTrajectoryFileReader
-#define __PYX_HAVE_API__XTCTrajectoryFileReader
+#define __PYX_HAVE__XTCTrajectoryFileWriter
+#define __PYX_HAVE_API__XTCTrajectoryFileWriter
 #include "Definitions.h"
 #include "Boolean.h"
 #include "Cardinal.h"
@@ -251,7 +251,6 @@
 #include "Transformation3.h"
 #include "Coordinates3.h"
 #include "xdrfile.h"
-#include "xdrfile_xtc.h"
 #include "wrapper.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -335,7 +334,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "XTCTrajectoryFileReader.pyx",
+  "XTCTrajectoryFileWriter.pyx",
   "pCore.Vector3.pxd",
   "pCore.Matrix33.pxd",
   "pCore.Real1DArray.pxd",
@@ -352,9 +351,9 @@ struct __pyx_obj_5pCore_11RegularGrid_RegularGrid;
 struct __pyx_obj_5pCore_8Matrix33_Matrix33;
 struct __pyx_obj_5pCore_9Selection_Selection;
 struct __pyx_obj_5pCore_15Transformation3_Transformation3;
+struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter;
 struct __pyx_obj_5pCore_11Real2DArray_Real2DArray;
 struct __pyx_obj_5pCore_15SymmetricMatrix_SymmetricMatrix;
-struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader;
 struct __pyx_obj_5pCore_11Real1DArray_Real1DArray;
 struct __pyx_obj_5pCore_7Vector3_Vector3;
 struct __pyx_obj_5pCore_12Coordinates3_Coordinates3;
@@ -430,6 +429,27 @@ struct __pyx_obj_5pCore_15Transformation3_Transformation3 {
 };
 
 
+/* "XTCTrajectoryFileWriter.pxd":33
+ * 
+ * 
+ * cdef class XTCTrajectoryFileWriter:             # <<<<<<<<<<<<<<
+ *     cdef public object  isOpen
+ *     cdef public object  owner
+ */
+struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter {
+  PyObject_HEAD
+  PyObject *isOpen;
+  PyObject *owner;
+  PyObject *path;
+  PyObject *numberOfFrames;
+  PyObject *numberOfAtoms;
+  PyObject *currentFrame;
+  PyObject *precision;
+  XDRFILE *xdrfile;
+  rvec *fb;
+};
+
+
 /* "/home/mikolaj/local/opt/pDynamo-1.8.0/pCore-1.8.0/extensions/pyrex/pCore.Real2DArray.pxd":56
  * # . Class.
  * #===================================================================================================================================
@@ -457,26 +477,6 @@ struct __pyx_obj_5pCore_15SymmetricMatrix_SymmetricMatrix {
   SymmetricMatrix *cObject;
   PyObject *isOwner;
   PyObject *owner;
-};
-
-
-/* "XTCTrajectoryFileReader.pxd":37
- * 
- * 
- * cdef class XTCTrajectoryFileReader:             # <<<<<<<<<<<<<<
- *     cdef public object  isOpen
- *     cdef public object  owner
- */
-struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader {
-  PyObject_HEAD
-  PyObject *isOpen;
-  PyObject *owner;
-  PyObject *path;
-  PyObject *numberOfFrames;
-  PyObject *numberOfAtoms;
-  PyObject *currentFrame;
-  XDRFILE *xdrfile;
-  rvec *fb;
 };
 
 
@@ -567,6 +567,8 @@ struct __pyx_obj_5pCore_12Coordinates3_Coordinates3 {
   #define __Pyx_XGIVEREF(r)
 #endif /* CYTHON_REFNANNY */
 
+static PyObject *__Pyx_GetName(PyObject *dict, PyObject *name); /*proto*/
+
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found); /*proto*/
 
@@ -574,8 +576,6 @@ static void __Pyx_RaiseDoubleKeywordsError(
     const char* func_name, PyObject* kw_name); /*proto*/
 
 static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],     PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,     const char* function_name); /*proto*/
-
-static PyObject *__Pyx_GetName(PyObject *dict, PyObject *name); /*proto*/
 
 static CYTHON_INLINE void __Pyx_ErrRestore(PyObject *type, PyObject *value, PyObject *tb); /*proto*/
 static CYTHON_INLINE void __Pyx_ErrFetch(PyObject **type, PyObject **value, PyObject **tb); /*proto*/
@@ -585,8 +585,6 @@ static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject 
 static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type); /*proto*/
 
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, long level); /*proto*/
-
-static CYTHON_INLINE PyObject *__Pyx_PyInt_to_py_Integer(Integer);
 
 static CYTHON_INLINE Integer __Pyx_PyInt_from_py_Integer(PyObject *);
 
@@ -679,37 +677,30 @@ static PyTypeObject *__pyx_ptype_5pCore_15Transformation3_Transformation3 = 0;
 /* Module declarations from 'pCore.Coordinates3' */
 static PyTypeObject *__pyx_ptype_5pCore_12Coordinates3_Coordinates3 = 0;
 
-/* Module declarations from 'XTCTrajectoryFileReader' */
-static PyTypeObject *__pyx_ptype_23XTCTrajectoryFileReader_XTCTrajectoryFileReader = 0;
-#define __Pyx_MODULE_NAME "XTCTrajectoryFileReader"
-int __pyx_module_is_main_XTCTrajectoryFileReader = 0;
+/* Module declarations from 'XTCTrajectoryFileWriter' */
+static PyTypeObject *__pyx_ptype_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter = 0;
+#define __Pyx_MODULE_NAME "XTCTrajectoryFileWriter"
+int __pyx_module_is_main_XTCTrajectoryFileWriter = 0;
 
-/* Implementation of 'XTCTrajectoryFileReader' */
-static char __pyx_k_1[] = "Allocate system coordinates first.";
-static char __pyx_k_3[] = "Cannot read the number of atoms from %s";
-static char __pyx_k_4[] = "System has %d atoms but there are %d atoms in XTC file.";
+/* Implementation of 'XTCTrajectoryFileWriter' */
+static PyObject *__pyx_builtin_any;
+static char __pyx_k_1[] = "System is missing coordinates.";
+static char __pyx_k_3[] = "Precision can only adopt values of 10, 100 and 1000.";
 static char __pyx_k_5[] = "Cannot allocate frame buffer.";
 static char __pyx_k_7[] = "File has already been opened.";
 static char __pyx_k_9[] = "Cannot open file %s";
-static char __pyx_k_11[] = "XTC file";
-static char __pyx_k_13[] = "Number of Atoms";
-static char __pyx_k_14[] = "%s";
-static char __pyx_k_15[] = "Number of Frames";
-static char __pyx_k_16[] = "SystemGeometryTrajectory";
-static char __pyx_k_17[] = "XTCTrajectoryFileReader is a class for reading XTC trajectories.";
-static char __pyx_k_18[] = "XTCTrajectoryFileReader";
-static char __pyx_k_19[] = "XTCTrajectory_ToSystemGeometryTrajectory";
+static char __pyx_k_11[] = "SystemGeometryTrajectory";
+static char __pyx_k_12[] = "XTCTrajectoryFileWriter is a class for writing XTC trajectories.";
+static char __pyx_k_13[] = "XTCTrajectoryFileWriter";
+static char __pyx_k_14[] = "XTCTrajectory_FromSystemGeometryTrajectory";
 static char __pyx_k__r[] = "r";
 static char __pyx_k__w[] = "w";
+static char __pyx_k__any[] = "any";
 static char __pyx_k__log[] = "log";
 static char __pyx_k__Open[] = "Open";
-static char __pyx_k__Stop[] = "Stop";
 static char __pyx_k__mode[] = "mode";
 static char __pyx_k__path[] = "path";
 static char __pyx_k__Close[] = "Close";
-static char __pyx_k__Entry[] = "Entry";
-static char __pyx_k__Start[] = "Start";
-static char __pyx_k__atoms[] = "atoms";
 static char __pyx_k__owner[] = "owner";
 static char __pyx_k__pCore[] = "pCore";
 static char __pyx_k__inPath[] = "inPath";
@@ -719,8 +710,8 @@ static char __pyx_k__logFile[] = "logFile";
 static char __pyx_k__outPath[] = "outPath";
 static char __pyx_k____main__[] = "__main__";
 static char __pyx_k____test__[] = "__test__";
-static char __pyx_k__GetSummary[] = "GetSummary";
-static char __pyx_k__ReadHeader[] = "ReadHeader";
+static char __pyx_k__precision[] = "precision";
+static char __pyx_k__WriteHeader[] = "WriteHeader";
 static char __pyx_k__coordinates3[] = "coordinates3";
 static char __pyx_k__CLibraryError[] = "CLibraryError";
 static char __pyx_k__LogFileActive[] = "LogFileActive";
@@ -728,33 +719,24 @@ static char __pyx_k__XTCTrajectory[] = "XTCTrajectory";
 static char __pyx_k__WriteOwnerData[] = "WriteOwnerData";
 static char __pyx_k__RestoreOwnerData[] = "RestoreOwnerData";
 static PyObject *__pyx_kp_s_1;
-static PyObject *__pyx_kp_s_11;
-static PyObject *__pyx_kp_s_13;
-static PyObject *__pyx_kp_s_14;
-static PyObject *__pyx_kp_s_15;
-static PyObject *__pyx_n_s_16;
-static PyObject *__pyx_n_s_18;
-static PyObject *__pyx_n_s_19;
+static PyObject *__pyx_n_s_11;
+static PyObject *__pyx_n_s_13;
+static PyObject *__pyx_n_s_14;
 static PyObject *__pyx_kp_s_3;
-static PyObject *__pyx_kp_s_4;
 static PyObject *__pyx_kp_s_5;
 static PyObject *__pyx_kp_s_7;
 static PyObject *__pyx_kp_s_9;
 static PyObject *__pyx_n_s__CLibraryError;
 static PyObject *__pyx_n_s__Close;
-static PyObject *__pyx_n_s__Entry;
-static PyObject *__pyx_n_s__GetSummary;
 static PyObject *__pyx_n_s__LogFileActive;
 static PyObject *__pyx_n_s__Open;
-static PyObject *__pyx_n_s__ReadHeader;
 static PyObject *__pyx_n_s__RestoreOwnerData;
-static PyObject *__pyx_n_s__Start;
-static PyObject *__pyx_n_s__Stop;
+static PyObject *__pyx_n_s__WriteHeader;
 static PyObject *__pyx_n_s__WriteOwnerData;
 static PyObject *__pyx_n_s__XTCTrajectory;
 static PyObject *__pyx_n_s____main__;
 static PyObject *__pyx_n_s____test__;
-static PyObject *__pyx_n_s__atoms;
+static PyObject *__pyx_n_s__any;
 static PyObject *__pyx_n_s__coordinates3;
 static PyObject *__pyx_n_s__inPath;
 static PyObject *__pyx_n_s__log;
@@ -765,30 +747,35 @@ static PyObject *__pyx_n_s__owner;
 static PyObject *__pyx_n_s__pBabel;
 static PyObject *__pyx_n_s__pCore;
 static PyObject *__pyx_n_s__path;
+static PyObject *__pyx_n_s__precision;
+static PyObject *__pyx_n_s__r;
 static PyObject *__pyx_n_s__system;
-static PyObject *__pyx_n_s__w;
 static PyObject *__pyx_int_0;
+static PyObject *__pyx_int_1;
+static PyObject *__pyx_int_10;
+static PyObject *__pyx_int_100;
+static PyObject *__pyx_int_1000;
 static PyObject *__pyx_k_10;
 static PyObject *__pyx_k_tuple_2;
+static PyObject *__pyx_k_tuple_4;
 static PyObject *__pyx_k_tuple_6;
 static PyObject *__pyx_k_tuple_8;
-static PyObject *__pyx_k_tuple_12;
 
-/* "XTCTrajectoryFileReader.pyx":17
- *     """XTC trajectory file reader."""
+/* "XTCTrajectoryFileWriter.pyx":17
+ *     """XTC trajectory file writer."""
  * 
  *     def __getmodule__ (self):             # <<<<<<<<<<<<<<
  *         return "XTCTrajectory"
  * 
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader___getmodule__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader___getmodule__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter___getmodule__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter___getmodule__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getmodule__");
 
-  /* "XTCTrajectoryFileReader.pyx":18
+  /* "XTCTrajectoryFileWriter.pyx":18
  * 
  *     def __getmodule__ (self):
  *         return "XTCTrajectory"             # <<<<<<<<<<<<<<
@@ -807,7 +794,7 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader___
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":21
+/* "XTCTrajectoryFileWriter.pyx":21
  * 
  * 
  *     def __len__ (self):             # <<<<<<<<<<<<<<
@@ -815,8 +802,8 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader___
  * 
  */
 
-static Py_ssize_t __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_1__len__(PyObject *__pyx_v_self); /*proto*/
-static Py_ssize_t __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_1__len__(PyObject *__pyx_v_self) {
+static Py_ssize_t __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_1__len__(PyObject *__pyx_v_self); /*proto*/
+static Py_ssize_t __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_1__len__(PyObject *__pyx_v_self) {
   Py_ssize_t __pyx_r;
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
@@ -825,28 +812,28 @@ static Py_ssize_t __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_1
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__len__");
 
-  /* "XTCTrajectoryFileReader.pyx":22
+  /* "XTCTrajectoryFileWriter.pyx":22
  * 
  *     def __len__ (self):
  *         return self.numberOfFrames             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyIndex_AsSsize_t(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames); if (unlikely((__pyx_t_1 == (Py_ssize_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 22; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyIndex_AsSsize_t(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames); if (unlikely((__pyx_t_1 == (Py_ssize_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 22; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.__len__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.__len__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":25
+/* "XTCTrajectoryFileWriter.pyx":25
  * 
  * 
  *     def __dealloc__ (self):             # <<<<<<<<<<<<<<
@@ -854,8 +841,8 @@ static Py_ssize_t __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_1
  *         Buffer_Deallocate (&self.fb)
  */
 
-static void __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_2__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_2__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_2__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_2__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -864,16 +851,16 @@ static void __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_2__deal
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__dealloc__");
 
-  /* "XTCTrajectoryFileReader.pyx":27
+  /* "XTCTrajectoryFileWriter.pyx":27
  *     def __dealloc__ (self):
  *         """Finalization."""
  *         Buffer_Deallocate (&self.fb)             # <<<<<<<<<<<<<<
  *         self.Close ()
  * 
  */
-  Buffer_Deallocate((&((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->fb));
+  Buffer_Deallocate((&((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->fb));
 
-  /* "XTCTrajectoryFileReader.pyx":28
+  /* "XTCTrajectoryFileWriter.pyx":28
  *         """Finalization."""
  *         Buffer_Deallocate (&self.fb)
  *         self.Close ()             # <<<<<<<<<<<<<<
@@ -891,47 +878,49 @@ static void __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_2__deal
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.__dealloc__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.__dealloc__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
 }
 
-/* "XTCTrajectoryFileReader.pyx":31
+/* "XTCTrajectoryFileWriter.pyx":31
  * 
  * 
- *     def __init__ (self, path, owner):             # <<<<<<<<<<<<<<
+ *     def __init__ (self, path, owner, precision = 100):             # <<<<<<<<<<<<<<
  *         """Constructor."""
- *         cdef Integer  numberOfAtoms
+ *         cdef Integer natoms
  */
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__[] = "Constructor.";
-struct wrapperbase __pyx_wrapperbase_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__;
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__[] = "Constructor.";
+struct wrapperbase __pyx_wrapperbase_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__;
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_path = 0;
   PyObject *__pyx_v_owner = 0;
-  Integer __pyx_v_numberOfAtoms;
-  Integer __pyx_v_status;
-  Py_ssize_t __pyx_v_systemNumberOfAtoms;
+  PyObject *__pyx_v_precision = 0;
+  Integer __pyx_v_natoms;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
-  char *__pyx_t_4;
+  PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
-  Py_ssize_t __pyx_t_6;
-  PyObject *__pyx_t_7 = NULL;
+  int __pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  Integer __pyx_t_8;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  static PyObject **__pyx_pyargnames[] = {&__pyx_n_s__path,&__pyx_n_s__owner,0};
+  static PyObject **__pyx_pyargnames[] = {&__pyx_n_s__path,&__pyx_n_s__owner,&__pyx_n_s__precision,0};
   __Pyx_RefNannySetupContext("__init__");
   {
-    PyObject* values[2] = {0,0};
+    PyObject* values[3] = {0,0,0};
+    values[2] = ((PyObject *)__pyx_int_100);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         case  0: break;
@@ -947,306 +936,288 @@ static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init_
         values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s__owner);
         if (likely(values[1])) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 2, 3, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s__precision);
+          if (value) { values[2] = value; kw_args--; }
         }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, PyTuple_GET_SIZE(__pyx_args), "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
     } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
     }
     __pyx_v_path = values[0];
     __pyx_v_owner = values[1];
+    __pyx_v_precision = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
 
-  /* "XTCTrajectoryFileReader.pyx":36
- *         cdef Integer  status
+  /* "XTCTrajectoryFileWriter.pyx":35
+ *         cdef Integer natoms
  * 
  *         if owner.coordinates3 is None:             # <<<<<<<<<<<<<<
- *             raise CLibraryError ("Allocate system coordinates first.")
+ *             raise CLibraryError ("System is missing coordinates.")
  * 
  */
-  __pyx_t_1 = PyObject_GetAttr(__pyx_v_owner, __pyx_n_s__coordinates3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyObject_GetAttr(__pyx_v_owner, __pyx_n_s__coordinates3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = (__pyx_t_1 == Py_None);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "XTCTrajectoryFileReader.pyx":37
+    /* "XTCTrajectoryFileWriter.pyx":36
  * 
  *         if owner.coordinates3 is None:
- *             raise CLibraryError ("Allocate system coordinates first.")             # <<<<<<<<<<<<<<
+ *             raise CLibraryError ("System is missing coordinates.")             # <<<<<<<<<<<<<<
  * 
- *         # How to use exdrOK here? (exdrOK = 0)
+ *         if not any ((precision == 10, precision == 100, precision == 1000, )):
  */
-    __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyObject_Call(__pyx_t_1, ((PyObject *)__pyx_k_tuple_2), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyObject_Call(__pyx_t_1, ((PyObject *)__pyx_k_tuple_2), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     goto __pyx_L6;
   }
   __pyx_L6:;
 
-  /* "XTCTrajectoryFileReader.pyx":40
+  /* "XTCTrajectoryFileWriter.pyx":38
+ *             raise CLibraryError ("System is missing coordinates.")
  * 
- *         # How to use exdrOK here? (exdrOK = 0)
- *         status = read_xtc_natoms (path, &numberOfAtoms)             # <<<<<<<<<<<<<<
- *         if status != 0:
- *             raise CLibraryError ("Cannot read the number of atoms from %s" % path)
+ *         if not any ((precision == 10, precision == 100, precision == 1000, )):             # <<<<<<<<<<<<<<
+ *             raise CLibraryError ("Precision can only adopt values of 10, 100 and 1000.")
+ * 
  */
-  __pyx_t_4 = PyBytes_AsString(__pyx_v_path); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 40; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_status = read_xtc_natoms(__pyx_t_4, (&__pyx_v_numberOfAtoms));
+  __pyx_t_3 = PyObject_RichCompare(__pyx_v_precision, __pyx_int_10, Py_EQ); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_precision, __pyx_int_100, Py_EQ); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = PyObject_RichCompare(__pyx_v_precision, __pyx_int_1000, Py_EQ); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_t_5));
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_3 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_t_4));
+  PyTuple_SET_ITEM(__pyx_t_4, 0, ((PyObject *)__pyx_t_5));
+  __Pyx_GIVEREF(((PyObject *)__pyx_t_5));
+  __pyx_t_5 = 0;
+  __pyx_t_5 = PyObject_Call(__pyx_builtin_any, ((PyObject *)__pyx_t_4), NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(((PyObject *)__pyx_t_4)); __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_6 = (!__pyx_t_2);
+  if (__pyx_t_6) {
 
-  /* "XTCTrajectoryFileReader.pyx":41
- *         # How to use exdrOK here? (exdrOK = 0)
- *         status = read_xtc_natoms (path, &numberOfAtoms)
- *         if status != 0:             # <<<<<<<<<<<<<<
- *             raise CLibraryError ("Cannot read the number of atoms from %s" % path)
+    /* "XTCTrajectoryFileWriter.pyx":39
  * 
- */
-  __pyx_t_2 = (__pyx_v_status != 0);
-  if (__pyx_t_2) {
-
-    /* "XTCTrajectoryFileReader.pyx":42
- *         status = read_xtc_natoms (path, &numberOfAtoms)
- *         if status != 0:
- *             raise CLibraryError ("Cannot read the number of atoms from %s" % path)             # <<<<<<<<<<<<<<
+ *         if not any ((precision == 10, precision == 100, precision == 1000, )):
+ *             raise CLibraryError ("Precision can only adopt values of 10, 100 and 1000.")             # <<<<<<<<<<<<<<
  * 
- *         systemNumberOfAtoms = len (owner.atoms)
+ *         self.path           = path
  */
-    __pyx_t_3 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = PyNumber_Remainder(((PyObject *)__pyx_kp_s_3), __pyx_v_path); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(((PyObject *)__pyx_t_1));
-    __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(((PyObject *)__pyx_t_5));
-    PyTuple_SET_ITEM(__pyx_t_5, 0, ((PyObject *)__pyx_t_1));
-    __Pyx_GIVEREF(((PyObject *)__pyx_t_1));
-    __pyx_t_1 = 0;
-    __pyx_t_1 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_t_5), NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(((PyObject *)__pyx_t_5)); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = PyObject_Call(__pyx_t_5, ((PyObject *)__pyx_k_tuple_4), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     goto __pyx_L7;
   }
   __pyx_L7:;
 
-  /* "XTCTrajectoryFileReader.pyx":44
- *             raise CLibraryError ("Cannot read the number of atoms from %s" % path)
+  /* "XTCTrajectoryFileWriter.pyx":41
+ *             raise CLibraryError ("Precision can only adopt values of 10, 100 and 1000.")
  * 
- *         systemNumberOfAtoms = len (owner.atoms)             # <<<<<<<<<<<<<<
- *         if (numberOfAtoms != systemNumberOfAtoms):
- *             raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (systemNumberOfAtoms, numberOfAtoms))
+ *         self.path           = path             # <<<<<<<<<<<<<<
+ *         self.owner          = owner
+ *         self.precision      = precision
  */
-  __pyx_t_1 = PyObject_GetAttr(__pyx_v_owner, __pyx_n_s__atoms); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_systemNumberOfAtoms = __pyx_t_6;
+  __Pyx_INCREF(__pyx_v_path);
+  __Pyx_GIVEREF(__pyx_v_path);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path = __pyx_v_path;
 
-  /* "XTCTrajectoryFileReader.pyx":45
+  /* "XTCTrajectoryFileWriter.pyx":42
  * 
- *         systemNumberOfAtoms = len (owner.atoms)
- *         if (numberOfAtoms != systemNumberOfAtoms):             # <<<<<<<<<<<<<<
- *             raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (systemNumberOfAtoms, numberOfAtoms))
+ *         self.path           = path
+ *         self.owner          = owner             # <<<<<<<<<<<<<<
+ *         self.precision      = precision
+ *         self.numberOfAtoms  = len (owner.coordinates3)
+ */
+  __Pyx_INCREF(__pyx_v_owner);
+  __Pyx_GIVEREF(__pyx_v_owner);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner = __pyx_v_owner;
+
+  /* "XTCTrajectoryFileWriter.pyx":43
+ *         self.path           = path
+ *         self.owner          = owner
+ *         self.precision      = precision             # <<<<<<<<<<<<<<
+ *         self.numberOfAtoms  = len (owner.coordinates3)
+ *         self.numberOfFrames = 0
+ */
+  __Pyx_INCREF(__pyx_v_precision);
+  __Pyx_GIVEREF(__pyx_v_precision);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision = __pyx_v_precision;
+
+  /* "XTCTrajectoryFileWriter.pyx":44
+ *         self.owner          = owner
+ *         self.precision      = precision
+ *         self.numberOfAtoms  = len (owner.coordinates3)             # <<<<<<<<<<<<<<
+ *         self.numberOfFrames = 0
+ *         self.currentFrame   = 0
+ */
+  __pyx_t_4 = PyObject_GetAttr(__pyx_v_owner, __pyx_n_s__coordinates3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = PyObject_Length(__pyx_t_4); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_7); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_4);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms = __pyx_t_4;
+  __pyx_t_4 = 0;
+
+  /* "XTCTrajectoryFileWriter.pyx":45
+ *         self.precision      = precision
+ *         self.numberOfAtoms  = len (owner.coordinates3)
+ *         self.numberOfFrames = 0             # <<<<<<<<<<<<<<
+ *         self.currentFrame   = 0
  * 
  */
-  __pyx_t_2 = (__pyx_v_numberOfAtoms != __pyx_v_systemNumberOfAtoms);
-  if (__pyx_t_2) {
+  __Pyx_INCREF(__pyx_int_0);
+  __Pyx_GIVEREF(__pyx_int_0);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames = __pyx_int_0;
 
-    /* "XTCTrajectoryFileReader.pyx":46
- *         systemNumberOfAtoms = len (owner.atoms)
- *         if (numberOfAtoms != systemNumberOfAtoms):
- *             raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (systemNumberOfAtoms, numberOfAtoms))             # <<<<<<<<<<<<<<
+  /* "XTCTrajectoryFileWriter.pyx":46
+ *         self.numberOfAtoms  = len (owner.coordinates3)
+ *         self.numberOfFrames = 0
+ *         self.currentFrame   = 0             # <<<<<<<<<<<<<<
  * 
- *         self.fb = Buffer_Allocate (numberOfAtoms)
+ *         natoms = self.numberOfAtoms
  */
-    __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_systemNumberOfAtoms); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyInt_to_py_Integer(__pyx_v_numberOfAtoms); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(((PyObject *)__pyx_t_7));
-    PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_3);
-    __pyx_t_5 = 0;
-    __pyx_t_3 = 0;
-    __pyx_t_3 = PyObject_Call(((PyObject *)__pyx_kp_s_4), ((PyObject *)__pyx_t_7), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(((PyObject *)__pyx_t_7)); __pyx_t_7 = 0;
-    __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(((PyObject *)__pyx_t_7));
-    PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_3);
-    __pyx_t_3 = 0;
-    __pyx_t_3 = PyObject_Call(__pyx_t_1, ((PyObject *)__pyx_t_7), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(((PyObject *)__pyx_t_7)); __pyx_t_7 = 0;
-    __Pyx_Raise(__pyx_t_3, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    goto __pyx_L8;
-  }
-  __pyx_L8:;
+  __Pyx_INCREF(__pyx_int_0);
+  __Pyx_GIVEREF(__pyx_int_0);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame = __pyx_int_0;
 
-  /* "XTCTrajectoryFileReader.pyx":48
- *             raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (systemNumberOfAtoms, numberOfAtoms))
+  /* "XTCTrajectoryFileWriter.pyx":48
+ *         self.currentFrame   = 0
  * 
- *         self.fb = Buffer_Allocate (numberOfAtoms)             # <<<<<<<<<<<<<<
+ *         natoms = self.numberOfAtoms             # <<<<<<<<<<<<<<
+ *         self.fb = Buffer_Allocate (natoms)
+ *         if self.fb == NULL:
+ */
+  __pyx_t_8 = __Pyx_PyInt_from_py_Integer(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms); if (unlikely((__pyx_t_8 == (Integer)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_natoms = __pyx_t_8;
+
+  /* "XTCTrajectoryFileWriter.pyx":49
+ * 
+ *         natoms = self.numberOfAtoms
+ *         self.fb = Buffer_Allocate (natoms)             # <<<<<<<<<<<<<<
  *         if self.fb == NULL:
  *             raise CLibraryError ("Cannot allocate frame buffer.")
  */
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->fb = Buffer_Allocate(__pyx_v_numberOfAtoms);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->fb = Buffer_Allocate(__pyx_v_natoms);
 
-  /* "XTCTrajectoryFileReader.pyx":49
- * 
- *         self.fb = Buffer_Allocate (numberOfAtoms)
+  /* "XTCTrajectoryFileWriter.pyx":50
+ *         natoms = self.numberOfAtoms
+ *         self.fb = Buffer_Allocate (natoms)
  *         if self.fb == NULL:             # <<<<<<<<<<<<<<
  *             raise CLibraryError ("Cannot allocate frame buffer.")
  * 
  */
-  __pyx_t_2 = (((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->fb == NULL);
-  if (__pyx_t_2) {
+  __pyx_t_6 = (((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->fb == NULL);
+  if (__pyx_t_6) {
 
-    /* "XTCTrajectoryFileReader.pyx":50
- *         self.fb = Buffer_Allocate (numberOfAtoms)
+    /* "XTCTrajectoryFileWriter.pyx":51
+ *         self.fb = Buffer_Allocate (natoms)
  *         if self.fb == NULL:
  *             raise CLibraryError ("Cannot allocate frame buffer.")             # <<<<<<<<<<<<<<
  * 
- *         self.path           = path
+ *         self.Open ()
  */
-    __pyx_t_3 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_k_tuple_6), NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_Raise(__pyx_t_7, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    goto __pyx_L9;
+    __pyx_t_4 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = PyObject_Call(__pyx_t_4, ((PyObject *)__pyx_k_tuple_6), NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    goto __pyx_L8;
   }
-  __pyx_L9:;
+  __pyx_L8:;
 
-  /* "XTCTrajectoryFileReader.pyx":52
+  /* "XTCTrajectoryFileWriter.pyx":53
  *             raise CLibraryError ("Cannot allocate frame buffer.")
  * 
- *         self.path           = path             # <<<<<<<<<<<<<<
- *         self.owner          = owner
- *         self.numberOfAtoms  = numberOfAtoms
- */
-  __Pyx_INCREF(__pyx_v_path);
-  __Pyx_GIVEREF(__pyx_v_path);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path = __pyx_v_path;
-
-  /* "XTCTrajectoryFileReader.pyx":53
- * 
- *         self.path           = path
- *         self.owner          = owner             # <<<<<<<<<<<<<<
- *         self.numberOfAtoms  = numberOfAtoms
- *         self.numberOfFrames = 0
- */
-  __Pyx_INCREF(__pyx_v_owner);
-  __Pyx_GIVEREF(__pyx_v_owner);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner = __pyx_v_owner;
-
-  /* "XTCTrajectoryFileReader.pyx":54
- *         self.path           = path
- *         self.owner          = owner
- *         self.numberOfAtoms  = numberOfAtoms             # <<<<<<<<<<<<<<
- *         self.numberOfFrames = 0
- *         self.currentFrame   = 0
- */
-  __pyx_t_7 = __Pyx_PyInt_to_py_Integer(__pyx_v_numberOfAtoms); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_7);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms = __pyx_t_7;
-  __pyx_t_7 = 0;
-
-  /* "XTCTrajectoryFileReader.pyx":55
- *         self.owner          = owner
- *         self.numberOfAtoms  = numberOfAtoms
- *         self.numberOfFrames = 0             # <<<<<<<<<<<<<<
- *         self.currentFrame   = 0
- *         self.Open ()
- */
-  __Pyx_INCREF(__pyx_int_0);
-  __Pyx_GIVEREF(__pyx_int_0);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames = __pyx_int_0;
-
-  /* "XTCTrajectoryFileReader.pyx":56
- *         self.numberOfAtoms  = numberOfAtoms
- *         self.numberOfFrames = 0
- *         self.currentFrame   = 0             # <<<<<<<<<<<<<<
- *         self.Open ()
- *         # self._Initialize     ()
- */
-  __Pyx_INCREF(__pyx_int_0);
-  __Pyx_GIVEREF(__pyx_int_0);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame = __pyx_int_0;
-
-  /* "XTCTrajectoryFileReader.pyx":57
- *         self.numberOfFrames = 0
- *         self.currentFrame   = 0
  *         self.Open ()             # <<<<<<<<<<<<<<
  *         # self._Initialize     ()
  *         # self._Allocate       ()
  */
-  __pyx_t_7 = PyObject_GetAttr(__pyx_v_self, __pyx_n_s__Open); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 = PyObject_Call(__pyx_t_7, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_5 = PyObject_GetAttr(__pyx_v_self, __pyx_n_s__Open); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyObject_Call(__pyx_t_5, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":63
+/* "XTCTrajectoryFileWriter.pyx":59
  * 
  * 
  *     def Close (self):             # <<<<<<<<<<<<<<
@@ -1254,9 +1225,9 @@ static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init_
  *         if self.isOpen:
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4Close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4Close[] = "Close the file.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4Close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4Close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4Close[] = "Close the file.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4Close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -1266,38 +1237,38 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("Close");
 
-  /* "XTCTrajectoryFileReader.pyx":65
+  /* "XTCTrajectoryFileWriter.pyx":61
  *     def Close (self):
  *         """Close the file."""
  *         if self.isOpen:             # <<<<<<<<<<<<<<
  *             xdrfile_close (self.xdrfile)
  *             self.isOpen = False
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "XTCTrajectoryFileReader.pyx":66
+    /* "XTCTrajectoryFileWriter.pyx":62
  *         """Close the file."""
  *         if self.isOpen:
  *             xdrfile_close (self.xdrfile)             # <<<<<<<<<<<<<<
  *             self.isOpen = False
- *         #else:
+ *         # This will never happen?
  */
-    xdrfile_close(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->xdrfile);
+    xdrfile_close(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->xdrfile);
 
-    /* "XTCTrajectoryFileReader.pyx":67
+    /* "XTCTrajectoryFileWriter.pyx":63
  *         if self.isOpen:
  *             xdrfile_close (self.xdrfile)
  *             self.isOpen = False             # <<<<<<<<<<<<<<
+ *         # This will never happen?
  *         #else:
- *         #    raise CLibraryError ("Cannot close file.")
  */
-    __pyx_t_2 = __Pyx_PyBool_FromLong(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyBool_FromLong(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
-    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-    ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen = __pyx_t_2;
+    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+    ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L5;
   }
@@ -1307,7 +1278,7 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4C
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.Close", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.Close", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1315,7 +1286,7 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4C
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":72
+/* "XTCTrajectoryFileWriter.pyx":69
  * 
  * 
  *     def Open (self):             # <<<<<<<<<<<<<<
@@ -1323,9 +1294,9 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4C
  *         cdef char *path
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5Open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5Open[] = "Open the file.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5Open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5Open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5Open[] = "Open the file.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5Open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   char *__pyx_v_path;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1339,104 +1310,104 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5O
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("Open");
 
-  /* "XTCTrajectoryFileReader.pyx":75
+  /* "XTCTrajectoryFileWriter.pyx":72
  *         """Open the file."""
  *         cdef char *path
  *         if self.isOpen:             # <<<<<<<<<<<<<<
  *             raise CLibraryError ("File has already been opened.")
  *         else:
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "XTCTrajectoryFileReader.pyx":76
+    /* "XTCTrajectoryFileWriter.pyx":73
  *         cdef char *path
  *         if self.isOpen:
  *             raise CLibraryError ("File has already been opened.")             # <<<<<<<<<<<<<<
  *         else:
  *             path = self.path
  */
-    __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyObject_Call(__pyx_t_2, ((PyObject *)__pyx_k_tuple_8), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyObject_Call(__pyx_t_2, ((PyObject *)__pyx_k_tuple_8), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     goto __pyx_L5;
   }
   /*else*/ {
 
-    /* "XTCTrajectoryFileReader.pyx":78
+    /* "XTCTrajectoryFileWriter.pyx":75
  *             raise CLibraryError ("File has already been opened.")
  *         else:
  *             path = self.path             # <<<<<<<<<<<<<<
- *             self.xdrfile = xdrfile_open (path, "r")
+ *             self.xdrfile = xdrfile_open (path, "w")
  *             if (self.xdrfile == NULL):
  */
-    __pyx_t_4 = PyBytes_AsString(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyBytes_AsString(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_path = __pyx_t_4;
 
-    /* "XTCTrajectoryFileReader.pyx":79
+    /* "XTCTrajectoryFileWriter.pyx":76
  *         else:
  *             path = self.path
- *             self.xdrfile = xdrfile_open (path, "r")             # <<<<<<<<<<<<<<
+ *             self.xdrfile = xdrfile_open (path, "w")             # <<<<<<<<<<<<<<
  *             if (self.xdrfile == NULL):
  *                 raise CLibraryError ("Cannot open file %s" % self.path)
  */
-    ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->xdrfile = xdrfile_open(__pyx_v_path, __pyx_k__r);
+    ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->xdrfile = xdrfile_open(__pyx_v_path, __pyx_k__w);
 
-    /* "XTCTrajectoryFileReader.pyx":80
+    /* "XTCTrajectoryFileWriter.pyx":77
  *             path = self.path
- *             self.xdrfile = xdrfile_open (path, "r")
+ *             self.xdrfile = xdrfile_open (path, "w")
  *             if (self.xdrfile == NULL):             # <<<<<<<<<<<<<<
  *                 raise CLibraryError ("Cannot open file %s" % self.path)
  *             self.isOpen  = True
  */
-    __pyx_t_1 = (((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->xdrfile == NULL);
+    __pyx_t_1 = (((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->xdrfile == NULL);
     if (__pyx_t_1) {
 
-      /* "XTCTrajectoryFileReader.pyx":81
- *             self.xdrfile = xdrfile_open (path, "r")
+      /* "XTCTrajectoryFileWriter.pyx":78
+ *             self.xdrfile = xdrfile_open (path, "w")
  *             if (self.xdrfile == NULL):
  *                 raise CLibraryError ("Cannot open file %s" % self.path)             # <<<<<<<<<<<<<<
  *             self.isOpen  = True
  * 
  */
-      __pyx_t_3 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_GetName(__pyx_m, __pyx_n_s__CLibraryError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PyNumber_Remainder(((PyObject *)__pyx_kp_s_9), ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyNumber_Remainder(((PyObject *)__pyx_kp_s_9), ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(((PyObject *)__pyx_t_2));
-      __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(((PyObject *)__pyx_t_5));
       PyTuple_SET_ITEM(__pyx_t_5, 0, ((PyObject *)__pyx_t_2));
       __Pyx_GIVEREF(((PyObject *)__pyx_t_2));
       __pyx_t_2 = 0;
-      __pyx_t_2 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_t_5), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_t_5), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(((PyObject *)__pyx_t_5)); __pyx_t_5 = 0;
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       goto __pyx_L6;
     }
     __pyx_L6:;
 
-    /* "XTCTrajectoryFileReader.pyx":82
+    /* "XTCTrajectoryFileWriter.pyx":79
  *             if (self.xdrfile == NULL):
  *                 raise CLibraryError ("Cannot open file %s" % self.path)
  *             self.isOpen  = True             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_2 = __Pyx_PyBool_FromLong(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyBool_FromLong(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
-    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-    ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen = __pyx_t_2;
+    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+    ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen = __pyx_t_2;
     __pyx_t_2 = 0;
   }
   __pyx_L5:;
@@ -1447,7 +1418,7 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5O
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.Open", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.Open", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1455,25 +1426,20 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5O
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":85
+/* "XTCTrajectoryFileWriter.pyx":82
  * 
  * 
  *     def Summary (self, log = logFile):             # <<<<<<<<<<<<<<
  *         """Summary."""
- *         if LogFileActive (log):
+ *         pass
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6Summary(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6Summary[] = "Summary.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6Summary(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6Summary(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6Summary[] = "Summary.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6Summary(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_log = 0;
-  PyObject *__pyx_v_summary = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -1498,7 +1464,7 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6S
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, PyTuple_GET_SIZE(__pyx_args), "Summary") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, PyTuple_GET_SIZE(__pyx_args), "Summary") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1511,173 +1477,33 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6S
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("Summary", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("Summary", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.Summary", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.Summary", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
 
-  /* "XTCTrajectoryFileReader.pyx":87
- *     def Summary (self, log = logFile):
- *         """Summary."""
- *         if LogFileActive (log):             # <<<<<<<<<<<<<<
- *             if self.isOpen:
- *                 summary = log.GetSummary ()
- */
-  __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__LogFileActive); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(((PyObject *)__pyx_t_2));
-  __Pyx_INCREF(__pyx_v_log);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_log);
-  __Pyx_GIVEREF(__pyx_v_log);
-  __pyx_t_3 = PyObject_Call(__pyx_t_1, ((PyObject *)__pyx_t_2), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(((PyObject *)__pyx_t_2)); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__pyx_t_4) {
-
-    /* "XTCTrajectoryFileReader.pyx":88
- *         """Summary."""
- *         if LogFileActive (log):
- *             if self.isOpen:             # <<<<<<<<<<<<<<
- *                 summary = log.GetSummary ()
- *                 summary.Start ("XTC file")
- */
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (__pyx_t_4) {
-
-      /* "XTCTrajectoryFileReader.pyx":89
- *         if LogFileActive (log):
- *             if self.isOpen:
- *                 summary = log.GetSummary ()             # <<<<<<<<<<<<<<
- *                 summary.Start ("XTC file")
- *                 summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)
- */
-      __pyx_t_3 = PyObject_GetAttr(__pyx_v_log, __pyx_n_s__GetSummary); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 89; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 89; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_v_summary = __pyx_t_2;
-      __pyx_t_2 = 0;
-
-      /* "XTCTrajectoryFileReader.pyx":90
- *             if self.isOpen:
- *                 summary = log.GetSummary ()
- *                 summary.Start ("XTC file")             # <<<<<<<<<<<<<<
- *                 summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)
- *                 summary.Entry ("Number of Frames", "%s" % self.numberOfFrames)
- */
-      __pyx_t_2 = PyObject_GetAttr(__pyx_v_summary, __pyx_n_s__Start); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = PyObject_Call(__pyx_t_2, ((PyObject *)__pyx_k_tuple_12), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-
-      /* "XTCTrajectoryFileReader.pyx":91
- *                 summary = log.GetSummary ()
- *                 summary.Start ("XTC file")
- *                 summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)             # <<<<<<<<<<<<<<
- *                 summary.Entry ("Number of Frames", "%s" % self.numberOfFrames)
- *                 summary.Stop ()
- */
-      __pyx_t_3 = PyObject_GetAttr(__pyx_v_summary, __pyx_n_s__Entry); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PyNumber_Remainder(((PyObject *)__pyx_kp_s_14), ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(((PyObject *)__pyx_t_2));
-      __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(((PyObject *)__pyx_t_1));
-      __Pyx_INCREF(((PyObject *)__pyx_kp_s_13));
-      PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_kp_s_13));
-      __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_13));
-      PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_t_2));
-      __Pyx_GIVEREF(((PyObject *)__pyx_t_2));
-      __pyx_t_2 = 0;
-      __pyx_t_2 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_t_1), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(((PyObject *)__pyx_t_1)); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-      /* "XTCTrajectoryFileReader.pyx":92
- *                 summary.Start ("XTC file")
- *                 summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)
- *                 summary.Entry ("Number of Frames", "%s" % self.numberOfFrames)             # <<<<<<<<<<<<<<
- *                 summary.Stop ()
- * 
- */
-      __pyx_t_2 = PyObject_GetAttr(__pyx_v_summary, __pyx_n_s__Entry); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_1 = PyNumber_Remainder(((PyObject *)__pyx_kp_s_14), ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(((PyObject *)__pyx_t_1));
-      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(((PyObject *)__pyx_t_3));
-      __Pyx_INCREF(((PyObject *)__pyx_kp_s_15));
-      PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_kp_s_15));
-      __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_15));
-      PyTuple_SET_ITEM(__pyx_t_3, 1, ((PyObject *)__pyx_t_1));
-      __Pyx_GIVEREF(((PyObject *)__pyx_t_1));
-      __pyx_t_1 = 0;
-      __pyx_t_1 = PyObject_Call(__pyx_t_2, ((PyObject *)__pyx_t_3), NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_DECREF(((PyObject *)__pyx_t_3)); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-      /* "XTCTrajectoryFileReader.pyx":93
- *                 summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)
- *                 summary.Entry ("Number of Frames", "%s" % self.numberOfFrames)
- *                 summary.Stop ()             # <<<<<<<<<<<<<<
- * 
- * 
- */
-      __pyx_t_1 = PyObject_GetAttr(__pyx_v_summary, __pyx_n_s__Stop); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyObject_Call(__pyx_t_1, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      goto __pyx_L7;
-    }
-    __pyx_L7:;
-    goto __pyx_L6;
-  }
-  __pyx_L6:;
-
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.Summary", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_summary);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":96
+/* "XTCTrajectoryFileWriter.pyx":87
  * 
  * 
- *     def ReadFooter (self):             # <<<<<<<<<<<<<<
- *         """Read the trajectory footer."""
+ *     def WriteFooter (self):             # <<<<<<<<<<<<<<
+ *         """Write the trajectory footer."""
  *         pass
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_7ReadFooter(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_7ReadFooter[] = "Read the trajectory footer.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_7ReadFooter(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_7WriteFooter(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_7WriteFooter[] = "Write the trajectory footer.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_7WriteFooter(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("ReadFooter");
+  __Pyx_RefNannySetupContext("WriteFooter");
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   __Pyx_XGIVEREF(__pyx_r);
@@ -1685,20 +1511,20 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_7R
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":101
+/* "XTCTrajectoryFileWriter.pyx":92
  * 
  * 
- *     def ReadHeader (self):             # <<<<<<<<<<<<<<
- *         """Read the trajectory header."""
+ *     def WriteHeader (self):             # <<<<<<<<<<<<<<
+ *         """Write the trajectory header."""
  *         pass
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8ReadHeader(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8ReadHeader[] = "Read the trajectory header.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8ReadHeader(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_8WriteHeader(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_8WriteHeader[] = "Write the trajectory header.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_8WriteHeader(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("ReadHeader");
+  __Pyx_RefNannySetupContext("WriteHeader");
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   __Pyx_XGIVEREF(__pyx_r);
@@ -1706,7 +1532,7 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8R
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":106
+/* "XTCTrajectoryFileWriter.pyx":97
  * 
  * 
  *     def AssignOwnerData (self):             # <<<<<<<<<<<<<<
@@ -1714,9 +1540,9 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8R
  *         pass
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_9AssignOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_9AssignOwnerData[] = "Assign owner data to the trajectory.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_9AssignOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9AssignOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9AssignOwnerData[] = "Assign owner data to the trajectory.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9AssignOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("AssignOwnerData");
@@ -1727,125 +1553,144 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_9A
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":111
+/* "XTCTrajectoryFileWriter.pyx":102
  * 
  * 
- *     def RestoreOwnerData (self):             # <<<<<<<<<<<<<<
- *         """Restore data from a frame to the owner."""
+ *     def WriteOwnerData (self):             # <<<<<<<<<<<<<<
+ *         """Write data from the owner to a frame."""
  *         cdef Coordinates3   coordinates3
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_10RestoreOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_10RestoreOwnerData[] = "Restore data from a frame to the owner.";
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_10RestoreOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_10WriteOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_10WriteOwnerData[] = "Write data from the owner to a frame.";
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_10WriteOwnerData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   struct __pyx_obj_5pCore_12Coordinates3_Coordinates3 *__pyx_v_coordinates3 = 0;
-  Boolean __pyx_v_result;
-  Integer __pyx_v_numberOfAtoms;
+  Integer __pyx_v_precision;
+  Integer __pyx_v_natoms;
   Integer __pyx_v_step;
+  Boolean __pyx_v_result;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  Integer __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_1 = NULL;
+  Integer __pyx_t_2;
   int __pyx_t_3;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("RestoreOwnerData");
+  __Pyx_RefNannySetupContext("WriteOwnerData");
 
-  /* "XTCTrajectoryFileReader.pyx":117
- *         cdef Integer        numberOfAtoms
+  /* "XTCTrajectoryFileWriter.pyx":109
  *         cdef Integer        step
- *         numberOfAtoms = self.numberOfAtoms             # <<<<<<<<<<<<<<
- *         coordinates3  = self.owner.coordinates3
- * 
- */
-  __pyx_t_1 = __Pyx_PyInt_from_py_Integer(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms); if (unlikely((__pyx_t_1 == (Integer)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_numberOfAtoms = __pyx_t_1;
-
-  /* "XTCTrajectoryFileReader.pyx":118
- *         cdef Integer        step
- *         numberOfAtoms = self.numberOfAtoms
+ *         cdef Boolean        result
  *         coordinates3  = self.owner.coordinates3             # <<<<<<<<<<<<<<
- * 
- *         result = ReadXTCFrame_ToCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, numberOfAtoms, &step)
+ *         precision     = self.precision
+ *         natoms        = self.numberOfAtoms
  */
-  __pyx_t_2 = PyObject_GetAttr(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner, __pyx_n_s__coordinates3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5pCore_12Coordinates3_Coordinates3))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_coordinates3 = ((struct __pyx_obj_5pCore_12Coordinates3_Coordinates3 *)__pyx_t_2);
-  __pyx_t_2 = 0;
+  __pyx_t_1 = PyObject_GetAttr(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner, __pyx_n_s__coordinates3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5pCore_12Coordinates3_Coordinates3))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_coordinates3 = ((struct __pyx_obj_5pCore_12Coordinates3_Coordinates3 *)__pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":120
+  /* "XTCTrajectoryFileWriter.pyx":110
+ *         cdef Boolean        result
  *         coordinates3  = self.owner.coordinates3
- * 
- *         result = ReadXTCFrame_ToCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, numberOfAtoms, &step)             # <<<<<<<<<<<<<<
- *         self.currentFrame = step
+ *         precision     = self.precision             # <<<<<<<<<<<<<<
+ *         natoms        = self.numberOfAtoms
+ *         step          = self.currentFrame
+ */
+  __pyx_t_2 = __Pyx_PyInt_from_py_Integer(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision); if (unlikely((__pyx_t_2 == (Integer)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_precision = __pyx_t_2;
+
+  /* "XTCTrajectoryFileWriter.pyx":111
+ *         coordinates3  = self.owner.coordinates3
+ *         precision     = self.precision
+ *         natoms        = self.numberOfAtoms             # <<<<<<<<<<<<<<
+ *         step          = self.currentFrame
  * 
  */
-  __pyx_v_result = ReadXTCFrame_ToCoordinates3(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->xdrfile, __pyx_v_coordinates3->cObject, ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->fb, __pyx_v_numberOfAtoms, (&__pyx_v_step));
+  __pyx_t_2 = __Pyx_PyInt_from_py_Integer(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms); if (unlikely((__pyx_t_2 == (Integer)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_natoms = __pyx_t_2;
 
-  /* "XTCTrajectoryFileReader.pyx":121
+  /* "XTCTrajectoryFileWriter.pyx":112
+ *         precision     = self.precision
+ *         natoms        = self.numberOfAtoms
+ *         step          = self.currentFrame             # <<<<<<<<<<<<<<
  * 
- *         result = ReadXTCFrame_ToCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, numberOfAtoms, &step)
- *         self.currentFrame = step             # <<<<<<<<<<<<<<
+ *         result = WriteXTCFrame_FromCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, natoms, step, precision)
+ */
+  __pyx_t_2 = __Pyx_PyInt_from_py_Integer(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame); if (unlikely((__pyx_t_2 == (Integer)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_step = __pyx_t_2;
+
+  /* "XTCTrajectoryFileWriter.pyx":114
+ *         step          = self.currentFrame
  * 
+ *         result = WriteXTCFrame_FromCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, natoms, step, precision)             # <<<<<<<<<<<<<<
  *         if result != True:
+ *             self.currentFrame   = self.currentFrame + 1
  */
-  __pyx_t_2 = __Pyx_PyInt_to_py_Integer(__pyx_v_step); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __pyx_v_result = WriteXTCFrame_FromCoordinates3(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->xdrfile, __pyx_v_coordinates3->cObject, ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->fb, __pyx_v_natoms, __pyx_v_step, __pyx_v_precision);
 
-  /* "XTCTrajectoryFileReader.pyx":123
- *         self.currentFrame = step
+  /* "XTCTrajectoryFileWriter.pyx":115
  * 
+ *         result = WriteXTCFrame_FromCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, natoms, step, precision)
  *         if result != True:             # <<<<<<<<<<<<<<
- *             self.numberOfFrames = step - 1
- *         # Returns True or False
+ *             self.currentFrame   = self.currentFrame + 1
+ *             self.numberOfFrames = self.currentFrame
  */
   __pyx_t_3 = (__pyx_v_result != 1);
   if (__pyx_t_3) {
 
-    /* "XTCTrajectoryFileReader.pyx":124
- * 
+    /* "XTCTrajectoryFileWriter.pyx":116
+ *         result = WriteXTCFrame_FromCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, natoms, step, precision)
  *         if result != True:
- *             self.numberOfFrames = step - 1             # <<<<<<<<<<<<<<
- *         # Returns True or False
- *         return result
+ *             self.currentFrame   = self.currentFrame + 1             # <<<<<<<<<<<<<<
+ *             self.numberOfFrames = self.currentFrame
+ * 
  */
-    __pyx_t_2 = PyInt_FromLong((__pyx_v_step - 1)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_GIVEREF(__pyx_t_2);
-    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-    ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames = __pyx_t_2;
-    __pyx_t_2 = 0;
+    __pyx_t_1 = PyNumber_Add(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame, __pyx_int_1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_1);
+    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+    ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame = __pyx_t_1;
+    __pyx_t_1 = 0;
+
+    /* "XTCTrajectoryFileWriter.pyx":117
+ *         if result != True:
+ *             self.currentFrame   = self.currentFrame + 1
+ *             self.numberOfFrames = self.currentFrame             # <<<<<<<<<<<<<<
+ * 
+ *         # Returns True or False
+ */
+    __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+    __Pyx_GIVEREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+    __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+    __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+    ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame;
     goto __pyx_L5;
   }
   __pyx_L5:;
 
-  /* "XTCTrajectoryFileReader.pyx":126
- *             self.numberOfFrames = step - 1
+  /* "XTCTrajectoryFileWriter.pyx":120
+ * 
  *         # Returns True or False
  *         return result             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyInt_FromLong(__pyx_v_result); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __pyx_t_1 = PyInt_FromLong(__pyx_v_result); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectoryFileReader.RestoreOwnerData", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter.WriteOwnerData", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_coordinates3);
@@ -1854,22 +1699,22 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_10
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pxd":38
+/* "XTCTrajectoryFileWriter.pxd":34
  * 
- * cdef class XTCTrajectoryFileReader:
+ * cdef class XTCTrajectoryFileWriter:
  *     cdef public object  isOpen             # <<<<<<<<<<<<<<
  *     cdef public object  owner
  *     cdef public object  path
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen___get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen___get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen___get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__");
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen;
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -1879,54 +1724,54 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6i
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__");
   __Pyx_INCREF(__pyx_v_value);
   __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen = __pyx_v_value;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen = __pyx_v_value;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen_2__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen_2__del__(PyObject *__pyx_v_self) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen_2__del__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__del__");
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->isOpen = Py_None;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->isOpen = Py_None;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pxd":39
- * cdef class XTCTrajectoryFileReader:
+/* "XTCTrajectoryFileWriter.pxd":35
+ * cdef class XTCTrajectoryFileWriter:
  *     cdef public object  isOpen
  *     cdef public object  owner             # <<<<<<<<<<<<<<
  *     cdef public object  path
  *     cdef public object  numberOfFrames
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner___get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner___get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner___get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__");
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner;
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -1936,39 +1781,39 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5o
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__");
   __Pyx_INCREF(__pyx_v_value);
   __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner = __pyx_v_value;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner = __pyx_v_value;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_2__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_2__del__(PyObject *__pyx_v_self) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner_2__del__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__del__");
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->owner = Py_None;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->owner = Py_None;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pxd":40
+/* "XTCTrajectoryFileWriter.pxd":36
  *     cdef public object  isOpen
  *     cdef public object  owner
  *     cdef public object  path             # <<<<<<<<<<<<<<
@@ -1976,14 +1821,14 @@ static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_2
  *     cdef public object  numberOfAtoms
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path___get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path___get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path___get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__");
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path;
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -1993,39 +1838,39 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4p
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__");
   __Pyx_INCREF(__pyx_v_value);
   __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path = __pyx_v_value;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path = __pyx_v_value;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_2__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_2__del__(PyObject *__pyx_v_self) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path_2__del__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__del__");
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->path = Py_None;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->path = Py_None;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pxd":41
+/* "XTCTrajectoryFileWriter.pxd":37
  *     cdef public object  owner
  *     cdef public object  path
  *     cdef public object  numberOfFrames             # <<<<<<<<<<<<<<
@@ -2033,14 +1878,14 @@ static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_2_
  *     cdef public object  currentFrame
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames___get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames___get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames___get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__");
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames;
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -2050,54 +1895,54 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__");
   __Pyx_INCREF(__pyx_v_value);
   __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames = __pyx_v_value;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames = __pyx_v_value;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames_2__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames_2__del__(PyObject *__pyx_v_self) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames_2__del__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__del__");
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfFrames = Py_None;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfFrames = Py_None;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pxd":42
+/* "XTCTrajectoryFileWriter.pxd":38
  *     cdef public object  path
  *     cdef public object  numberOfFrames
  *     cdef public object  numberOfAtoms             # <<<<<<<<<<<<<<
  *     cdef public object  currentFrame
- *     cdef CXDRFILE       *xdrfile
+ *     cdef public object  precision
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms___get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms___get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms___get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__");
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms;
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -2107,54 +1952,111 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__");
   __Pyx_INCREF(__pyx_v_value);
   __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms = __pyx_v_value;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms = __pyx_v_value;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms_2__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms_2__del__(PyObject *__pyx_v_self) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms_2__del__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__del__");
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->numberOfAtoms = Py_None;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->numberOfAtoms = Py_None;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pxd":43
+/* "XTCTrajectoryFileWriter.pxd":39
  *     cdef public object  numberOfFrames
  *     cdef public object  numberOfAtoms
  *     cdef public object  currentFrame             # <<<<<<<<<<<<<<
+ *     cdef public object  precision
+ *     cdef CXDRFILE       *xdrfile
+ */
+
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame___get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__");
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame;
+  goto __pyx_L0;
+
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__");
+  __Pyx_INCREF(__pyx_v_value);
+  __Pyx_GIVEREF(__pyx_v_value);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame = __pyx_v_value;
+
+  __pyx_r = 0;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame_2__del__(PyObject *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__");
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->currentFrame = Py_None;
+
+  __pyx_r = 0;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "XTCTrajectoryFileWriter.pxd":40
+ *     cdef public object  numberOfAtoms
+ *     cdef public object  currentFrame
+ *     cdef public object  precision             # <<<<<<<<<<<<<<
  *     cdef CXDRFILE       *xdrfile
  *     cdef rvec           *fb
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame___get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame___get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision___get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision___get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__");
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame;
+  __Pyx_INCREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  __pyx_r = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision;
   goto __pyx_L0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -2164,55 +2066,55 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision_1__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__");
   __Pyx_INCREF(__pyx_v_value);
   __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame = __pyx_v_value;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision = __pyx_v_value;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame_2__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame_2__del__(PyObject *__pyx_v_self) {
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision_2__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision_2__del__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__del__");
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame);
-  ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_v_self)->currentFrame = Py_None;
+  __Pyx_GOTREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  __Pyx_DECREF(((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision);
+  ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_v_self)->precision = Py_None;
 
   __pyx_r = 0;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "XTCTrajectoryFileReader.pyx":132
+/* "XTCTrajectoryFileWriter.pyx":126
  * # Helper functions
  * #===============================================================================
- * def XTCTrajectory_ToSystemGeometryTrajectory (inPath, outPath, system):             # <<<<<<<<<<<<<<
- *     """Convert an XTC trajectory to a SystemGeometryTrajectory."""
- *     inTrajectory  = XTCTrajectoryFileReader  (inPath,  system)
+ * def XTCTrajectory_FromSystemGeometryTrajectory (outPath, inPath, system):             # <<<<<<<<<<<<<<
+ *     """Convert a SystemGeometryTrajectory to an XTC trajectory."""
+ *     inTrajectory  = SystemGeometryTrajectory (inPath,  system, mode = "r")
  */
 
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory[] = "Convert an XTC trajectory to a SystemGeometryTrajectory.";
-static PyMethodDef __pyx_mdef_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory = {__Pyx_NAMESTR("XTCTrajectory_ToSystemGeometryTrajectory"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory, METH_VARARGS|METH_KEYWORDS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory)};
-static PyObject *__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_inPath = 0;
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory[] = "Convert a SystemGeometryTrajectory to an XTC trajectory.";
+static PyMethodDef __pyx_mdef_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory = {__Pyx_NAMESTR("XTCTrajectory_FromSystemGeometryTrajectory"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory, METH_VARARGS|METH_KEYWORDS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory)};
+static PyObject *__pyx_pf_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_outPath = 0;
+  PyObject *__pyx_v_inPath = 0;
   PyObject *__pyx_v_system = 0;
-  struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *__pyx_v_inTrajectory = NULL;
-  PyObject *__pyx_v_outTrajectory = NULL;
+  PyObject *__pyx_v_inTrajectory = NULL;
+  struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *__pyx_v_outTrajectory = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2223,8 +2125,8 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeomet
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  static PyObject **__pyx_pyargnames[] = {&__pyx_n_s__inPath,&__pyx_n_s__outPath,&__pyx_n_s__system,0};
-  __Pyx_RefNannySetupContext("XTCTrajectory_ToSystemGeometryTrajectory");
+  static PyObject **__pyx_pyargnames[] = {&__pyx_n_s__outPath,&__pyx_n_s__inPath,&__pyx_n_s__system,0};
+  __Pyx_RefNannySetupContext("XTCTrajectory_FromSystemGeometryTrajectory");
   __pyx_self = __pyx_self;
   {
     PyObject* values[3] = {0,0,0};
@@ -2240,24 +2142,24 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeomet
       kw_args = PyDict_Size(__pyx_kwds);
       switch (PyTuple_GET_SIZE(__pyx_args)) {
         case  0:
-        values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s__inPath);
+        values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s__outPath);
         if (likely(values[0])) kw_args--;
         else goto __pyx_L5_argtuple_error;
         case  1:
-        values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s__outPath);
+        values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s__inPath);
         if (likely(values[1])) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("XTCTrajectory_ToSystemGeometryTrajectory", 1, 3, 3, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("XTCTrajectory_FromSystemGeometryTrajectory", 1, 3, 3, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s__system);
         if (likely(values[2])) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("XTCTrajectory_ToSystemGeometryTrajectory", 1, 3, 3, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("XTCTrajectory_FromSystemGeometryTrajectory", 1, 3, 3, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, PyTuple_GET_SIZE(__pyx_args), "XTCTrajectory_ToSystemGeometryTrajectory") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, PyTuple_GET_SIZE(__pyx_args), "XTCTrajectory_FromSystemGeometryTrajectory") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -2266,130 +2168,130 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeomet
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
-    __pyx_v_inPath = values[0];
-    __pyx_v_outPath = values[1];
+    __pyx_v_outPath = values[0];
+    __pyx_v_inPath = values[1];
     __pyx_v_system = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("XTCTrajectory_ToSystemGeometryTrajectory", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("XTCTrajectory_FromSystemGeometryTrajectory", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectory_ToSystemGeometryTrajectory", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectory_FromSystemGeometryTrajectory", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
 
-  /* "XTCTrajectoryFileReader.pyx":134
- * def XTCTrajectory_ToSystemGeometryTrajectory (inPath, outPath, system):
- *     """Convert an XTC trajectory to a SystemGeometryTrajectory."""
- *     inTrajectory  = XTCTrajectoryFileReader  (inPath,  system)             # <<<<<<<<<<<<<<
- *     outTrajectory = SystemGeometryTrajectory (outPath, system, mode = "w")
+  /* "XTCTrajectoryFileWriter.pyx":128
+ * def XTCTrajectory_FromSystemGeometryTrajectory (outPath, inPath, system):
+ *     """Convert a SystemGeometryTrajectory to an XTC trajectory."""
+ *     inTrajectory  = SystemGeometryTrajectory (inPath,  system, mode = "r")             # <<<<<<<<<<<<<<
+ *     outTrajectory = XTCTrajectoryFileWriter  (outPath, system)
  * 
  */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(((PyObject *)__pyx_t_1));
+  __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s_11); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_t_2));
   __Pyx_INCREF(__pyx_v_inPath);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_inPath);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_inPath);
   __Pyx_GIVEREF(__pyx_v_inPath);
   __Pyx_INCREF(__pyx_v_system);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_system);
+  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_system);
   __Pyx_GIVEREF(__pyx_v_system);
-  __pyx_t_2 = PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_23XTCTrajectoryFileReader_XTCTrajectoryFileReader)), ((PyObject *)__pyx_t_1), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(((PyObject *)__pyx_t_1)); __pyx_t_1 = 0;
-  __pyx_v_inTrajectory = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "XTCTrajectoryFileReader.pyx":135
- *     """Convert an XTC trajectory to a SystemGeometryTrajectory."""
- *     inTrajectory  = XTCTrajectoryFileReader  (inPath,  system)
- *     outTrajectory = SystemGeometryTrajectory (outPath, system, mode = "w")             # <<<<<<<<<<<<<<
- * 
- *     inTrajectory.ReadHeader ()
- */
-  __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s_16); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(((PyObject *)__pyx_t_1));
-  __Pyx_INCREF(__pyx_v_outPath);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_outPath);
-  __Pyx_GIVEREF(__pyx_v_outPath);
-  __Pyx_INCREF(__pyx_v_system);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_system);
-  __Pyx_GIVEREF(__pyx_v_system);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(((PyObject *)__pyx_t_3));
-  if (PyDict_SetItem(__pyx_t_3, ((PyObject *)__pyx_n_s__mode), ((PyObject *)__pyx_n_s__w)) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_4 = PyEval_CallObjectWithKeywords(__pyx_t_2, ((PyObject *)__pyx_t_1), ((PyObject *)__pyx_t_3)); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, ((PyObject *)__pyx_n_s__mode), ((PyObject *)__pyx_n_s__r)) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyEval_CallObjectWithKeywords(__pyx_t_1, ((PyObject *)__pyx_t_2), ((PyObject *)__pyx_t_3)); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(((PyObject *)__pyx_t_1)); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(((PyObject *)__pyx_t_2)); __pyx_t_2 = 0;
   __Pyx_DECREF(((PyObject *)__pyx_t_3)); __pyx_t_3 = 0;
-  __pyx_v_outTrajectory = __pyx_t_4;
+  __pyx_v_inTrajectory = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":137
- *     outTrajectory = SystemGeometryTrajectory (outPath, system, mode = "w")
+  /* "XTCTrajectoryFileWriter.pyx":129
+ *     """Convert a SystemGeometryTrajectory to an XTC trajectory."""
+ *     inTrajectory  = SystemGeometryTrajectory (inPath,  system, mode = "r")
+ *     outTrajectory = XTCTrajectoryFileWriter  (outPath, system)             # <<<<<<<<<<<<<<
  * 
- *     inTrajectory.ReadHeader ()             # <<<<<<<<<<<<<<
+ *     outTrajectory.WriteHeader ()
+ */
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_t_4));
+  __Pyx_INCREF(__pyx_v_outPath);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_outPath);
+  __Pyx_GIVEREF(__pyx_v_outPath);
+  __Pyx_INCREF(__pyx_v_system);
+  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_system);
+  __Pyx_GIVEREF(__pyx_v_system);
+  __pyx_t_3 = PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter)), ((PyObject *)__pyx_t_4), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(((PyObject *)__pyx_t_4)); __pyx_t_4 = 0;
+  __pyx_v_outTrajectory = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "XTCTrajectoryFileWriter.pyx":131
+ *     outTrajectory = XTCTrajectoryFileWriter  (outPath, system)
+ * 
+ *     outTrajectory.WriteHeader ()             # <<<<<<<<<<<<<<
  *     while inTrajectory.RestoreOwnerData (): outTrajectory.WriteOwnerData ()
  * 
  */
-  __pyx_t_4 = PyObject_GetAttr(((PyObject *)__pyx_v_inTrajectory), __pyx_n_s__ReadHeader); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = PyObject_Call(__pyx_t_4, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyObject_GetAttr(((PyObject *)__pyx_v_outTrajectory), __pyx_n_s__WriteHeader); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":138
+  /* "XTCTrajectoryFileWriter.pyx":132
  * 
- *     inTrajectory.ReadHeader ()
+ *     outTrajectory.WriteHeader ()
  *     while inTrajectory.RestoreOwnerData (): outTrajectory.WriteOwnerData ()             # <<<<<<<<<<<<<<
  * 
  *     inTrajectory.Close  ()
  */
   while (1) {
-    __pyx_t_3 = PyObject_GetAttr(((PyObject *)__pyx_v_inTrajectory), __pyx_n_s__RestoreOwnerData); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyObject_GetAttr(__pyx_v_inTrajectory, __pyx_n_s__RestoreOwnerData); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_5 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyObject_Call(__pyx_t_4, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_5 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (!__pyx_t_5) break;
-    __pyx_t_4 = PyObject_GetAttr(__pyx_v_outTrajectory, __pyx_n_s__WriteOwnerData); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyObject_Call(__pyx_t_4, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyObject_GetAttr(((PyObject *)__pyx_v_outTrajectory), __pyx_n_s__WriteOwnerData); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
 
-  /* "XTCTrajectoryFileReader.pyx":140
+  /* "XTCTrajectoryFileWriter.pyx":134
  *     while inTrajectory.RestoreOwnerData (): outTrajectory.WriteOwnerData ()
  * 
  *     inTrajectory.Close  ()             # <<<<<<<<<<<<<<
  *     outTrajectory.Close ()
  */
-  __pyx_t_3 = PyObject_GetAttr(((PyObject *)__pyx_v_inTrajectory), __pyx_n_s__Close); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyObject_GetAttr(__pyx_v_inTrajectory, __pyx_n_s__Close); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyObject_Call(__pyx_t_4, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":141
+  /* "XTCTrajectoryFileWriter.pyx":135
  * 
  *     inTrajectory.Close  ()
  *     outTrajectory.Close ()             # <<<<<<<<<<<<<<
  */
-  __pyx_t_4 = PyObject_GetAttr(__pyx_v_outTrajectory, __pyx_n_s__Close); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 141; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = PyObject_Call(__pyx_t_4, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 141; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyObject_GetAttr(((PyObject *)__pyx_v_outTrajectory), __pyx_n_s__Close); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyObject_Call(__pyx_t_3, ((PyObject *)__pyx_empty_tuple), NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
@@ -2398,37 +2300,38 @@ static PyObject *__pyx_pf_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeomet
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("XTCTrajectoryFileReader.XTCTrajectory_ToSystemGeometryTrajectory", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("XTCTrajectoryFileWriter.XTCTrajectory_FromSystemGeometryTrajectory", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_inTrajectory);
-  __Pyx_XDECREF(__pyx_v_outTrajectory);
+  __Pyx_XDECREF(__pyx_v_inTrajectory);
+  __Pyx_XDECREF((PyObject *)__pyx_v_outTrajectory);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *p;
+static PyObject *__pyx_tp_new_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *p;
   PyObject *o = (*t->tp_alloc)(t, 0);
   if (!o) return 0;
-  p = ((struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)o);
+  p = ((struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)o);
   p->isOpen = Py_None; Py_INCREF(Py_None);
   p->owner = Py_None; Py_INCREF(Py_None);
   p->path = Py_None; Py_INCREF(Py_None);
   p->numberOfFrames = Py_None; Py_INCREF(Py_None);
   p->numberOfAtoms = Py_None; Py_INCREF(Py_None);
   p->currentFrame = Py_None; Py_INCREF(Py_None);
+  p->precision = Py_None; Py_INCREF(Py_None);
   return o;
 }
 
-static void __pyx_tp_dealloc_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(PyObject *o) {
-  struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *p = (struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)o;
+static void __pyx_tp_dealloc_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter(PyObject *o) {
+  struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *p = (struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)o;
   {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     ++Py_REFCNT(o);
-    __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_2__dealloc__(o);
+    __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_2__dealloc__(o);
     if (PyErr_Occurred()) PyErr_WriteUnraisable(o);
     --Py_REFCNT(o);
     PyErr_Restore(etype, eval, etb);
@@ -2439,12 +2342,13 @@ static void __pyx_tp_dealloc_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(P
   Py_XDECREF(p->numberOfFrames);
   Py_XDECREF(p->numberOfAtoms);
   Py_XDECREF(p->currentFrame);
+  Py_XDECREF(p->precision);
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *p = (struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)o;
+  struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *p = (struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)o;
   if (p->isOpen) {
     e = (*v)(p->isOpen, a); if (e) return e;
   }
@@ -2463,11 +2367,14 @@ static int __pyx_tp_traverse_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(P
   if (p->currentFrame) {
     e = (*v)(p->currentFrame, a); if (e) return e;
   }
+  if (p->precision) {
+    e = (*v)(p->precision, a); if (e) return e;
+  }
   return 0;
 }
 
-static int __pyx_tp_clear_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(PyObject *o) {
-  struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *p = (struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader *)o;
+static int __pyx_tp_clear_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter(PyObject *o) {
+  struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *p = (struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter *)o;
   PyObject* tmp;
   tmp = ((PyObject*)p->isOpen);
   p->isOpen = Py_None; Py_INCREF(Py_None);
@@ -2487,110 +2394,127 @@ static int __pyx_tp_clear_23XTCTrajectoryFileReader_XTCTrajectoryFileReader(PyOb
   tmp = ((PyObject*)p->currentFrame);
   p->currentFrame = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->precision);
+  p->precision = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
   return 0;
 }
 
-static PyObject *__pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_isOpen(PyObject *o, void *x) {
-  return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen___get__(o);
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_isOpen(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen___get__(o);
 }
 
-static int __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_isOpen(PyObject *o, PyObject *v, void *x) {
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_isOpen(PyObject *o, PyObject *v, void *x) {
   if (v) {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen_1__set__(o, v);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen_1__set__(o, v);
   }
   else {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6isOpen_2__del__(o);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6isOpen_2__del__(o);
   }
 }
 
-static PyObject *__pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_owner(PyObject *o, void *x) {
-  return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner___get__(o);
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_owner(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner___get__(o);
 }
 
-static int __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_owner(PyObject *o, PyObject *v, void *x) {
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_owner(PyObject *o, PyObject *v, void *x) {
   if (v) {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_1__set__(o, v);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner_1__set__(o, v);
   }
   else {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5owner_2__del__(o);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5owner_2__del__(o);
   }
 }
 
-static PyObject *__pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_path(PyObject *o, void *x) {
-  return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path___get__(o);
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_path(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path___get__(o);
 }
 
-static int __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_path(PyObject *o, PyObject *v, void *x) {
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_path(PyObject *o, PyObject *v, void *x) {
   if (v) {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_1__set__(o, v);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path_1__set__(o, v);
   }
   else {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4path_2__del__(o);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4path_2__del__(o);
   }
 }
 
-static PyObject *__pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfFrames(PyObject *o, void *x) {
-  return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames___get__(o);
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfFrames(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames___get__(o);
 }
 
-static int __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfFrames(PyObject *o, PyObject *v, void *x) {
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfFrames(PyObject *o, PyObject *v, void *x) {
   if (v) {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames_1__set__(o, v);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames_1__set__(o, v);
   }
   else {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_14numberOfFrames_2__del__(o);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_14numberOfFrames_2__del__(o);
   }
 }
 
-static PyObject *__pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfAtoms(PyObject *o, void *x) {
-  return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms___get__(o);
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfAtoms(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms___get__(o);
 }
 
-static int __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfAtoms(PyObject *o, PyObject *v, void *x) {
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfAtoms(PyObject *o, PyObject *v, void *x) {
   if (v) {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms_1__set__(o, v);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms_1__set__(o, v);
   }
   else {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_13numberOfAtoms_2__del__(o);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_13numberOfAtoms_2__del__(o);
   }
 }
 
-static PyObject *__pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_currentFrame(PyObject *o, void *x) {
-  return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame___get__(o);
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_currentFrame(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame___get__(o);
 }
 
-static int __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_currentFrame(PyObject *o, PyObject *v, void *x) {
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_currentFrame(PyObject *o, PyObject *v, void *x) {
   if (v) {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame_1__set__(o, v);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame_1__set__(o, v);
   }
   else {
-    return __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_12currentFrame_2__del__(o);
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_12currentFrame_2__del__(o);
   }
 }
 
-static PyMethodDef __pyx_methods_23XTCTrajectoryFileReader_XTCTrajectoryFileReader[] = {
-  {__Pyx_NAMESTR("__getmodule__"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader___getmodule__, METH_NOARGS, __Pyx_DOCSTR(0)},
-  {__Pyx_NAMESTR("Close"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4Close, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_4Close)},
-  {__Pyx_NAMESTR("Open"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5Open, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_5Open)},
-  {__Pyx_NAMESTR("Summary"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6Summary, METH_VARARGS|METH_KEYWORDS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_6Summary)},
-  {__Pyx_NAMESTR("ReadFooter"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_7ReadFooter, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_7ReadFooter)},
-  {__Pyx_NAMESTR("ReadHeader"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8ReadHeader, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_8ReadHeader)},
-  {__Pyx_NAMESTR("AssignOwnerData"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_9AssignOwnerData, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_9AssignOwnerData)},
-  {__Pyx_NAMESTR("RestoreOwnerData"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_10RestoreOwnerData, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_10RestoreOwnerData)},
+static PyObject *__pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_precision(PyObject *o, void *x) {
+  return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision___get__(o);
+}
+
+static int __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_precision(PyObject *o, PyObject *v, void *x) {
+  if (v) {
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision_1__set__(o, v);
+  }
+  else {
+    return __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9precision_2__del__(o);
+  }
+}
+
+static PyMethodDef __pyx_methods_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter[] = {
+  {__Pyx_NAMESTR("__getmodule__"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter___getmodule__, METH_NOARGS, __Pyx_DOCSTR(0)},
+  {__Pyx_NAMESTR("Close"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4Close, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_4Close)},
+  {__Pyx_NAMESTR("Open"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5Open, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_5Open)},
+  {__Pyx_NAMESTR("Summary"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6Summary, METH_VARARGS|METH_KEYWORDS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_6Summary)},
+  {__Pyx_NAMESTR("WriteFooter"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_7WriteFooter, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_7WriteFooter)},
+  {__Pyx_NAMESTR("WriteHeader"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_8WriteHeader, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_8WriteHeader)},
+  {__Pyx_NAMESTR("AssignOwnerData"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9AssignOwnerData, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_9AssignOwnerData)},
+  {__Pyx_NAMESTR("WriteOwnerData"), (PyCFunction)__pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_10WriteOwnerData, METH_NOARGS, __Pyx_DOCSTR(__pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_10WriteOwnerData)},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_23XTCTrajectoryFileReader_XTCTrajectoryFileReader[] = {
-  {(char *)"isOpen", __pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_isOpen, __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_isOpen, 0, 0},
-  {(char *)"owner", __pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_owner, __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_owner, 0, 0},
-  {(char *)"path", __pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_path, __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_path, 0, 0},
-  {(char *)"numberOfFrames", __pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfFrames, __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfFrames, 0, 0},
-  {(char *)"numberOfAtoms", __pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfAtoms, __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_numberOfAtoms, 0, 0},
-  {(char *)"currentFrame", __pyx_getprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_currentFrame, __pyx_setprop_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_currentFrame, 0, 0},
+static struct PyGetSetDef __pyx_getsets_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter[] = {
+  {(char *)"isOpen", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_isOpen, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_isOpen, 0, 0},
+  {(char *)"owner", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_owner, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_owner, 0, 0},
+  {(char *)"path", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_path, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_path, 0, 0},
+  {(char *)"numberOfFrames", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfFrames, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfFrames, 0, 0},
+  {(char *)"numberOfAtoms", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfAtoms, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_numberOfAtoms, 0, 0},
+  {(char *)"currentFrame", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_currentFrame, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_currentFrame, 0, 0},
+  {(char *)"precision", __pyx_getprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_precision, __pyx_setprop_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_precision, 0, 0},
   {0, 0, 0, 0, 0}
 };
 
-static PyNumberMethods __pyx_tp_as_number_XTCTrajectoryFileReader = {
+static PyNumberMethods __pyx_tp_as_number_XTCTrajectoryFileWriter = {
   0, /*nb_add*/
   0, /*nb_subtract*/
   0, /*nb_multiply*/
@@ -2648,8 +2572,8 @@ static PyNumberMethods __pyx_tp_as_number_XTCTrajectoryFileReader = {
   #endif
 };
 
-static PySequenceMethods __pyx_tp_as_sequence_XTCTrajectoryFileReader = {
-  __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_1__len__, /*sq_length*/
+static PySequenceMethods __pyx_tp_as_sequence_XTCTrajectoryFileWriter = {
+  __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_1__len__, /*sq_length*/
   0, /*sq_concat*/
   0, /*sq_repeat*/
   0, /*sq_item*/
@@ -2661,13 +2585,13 @@ static PySequenceMethods __pyx_tp_as_sequence_XTCTrajectoryFileReader = {
   0, /*sq_inplace_repeat*/
 };
 
-static PyMappingMethods __pyx_tp_as_mapping_XTCTrajectoryFileReader = {
-  __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_1__len__, /*mp_length*/
+static PyMappingMethods __pyx_tp_as_mapping_XTCTrajectoryFileWriter = {
+  __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_1__len__, /*mp_length*/
   0, /*mp_subscript*/
   0, /*mp_ass_subscript*/
 };
 
-static PyBufferProcs __pyx_tp_as_buffer_XTCTrajectoryFileReader = {
+static PyBufferProcs __pyx_tp_as_buffer_XTCTrajectoryFileWriter = {
   #if PY_MAJOR_VERSION < 3
   0, /*bf_getreadbuffer*/
   #endif
@@ -2688,12 +2612,12 @@ static PyBufferProcs __pyx_tp_as_buffer_XTCTrajectoryFileReader = {
   #endif
 };
 
-static PyTypeObject __pyx_type_23XTCTrajectoryFileReader_XTCTrajectoryFileReader = {
+static PyTypeObject __pyx_type_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter = {
   PyVarObject_HEAD_INIT(0, 0)
-  __Pyx_NAMESTR("XTCTrajectoryFileReader.XTCTrajectoryFileReader"), /*tp_name*/
-  sizeof(struct __pyx_obj_23XTCTrajectoryFileReader_XTCTrajectoryFileReader), /*tp_basicsize*/
+  __Pyx_NAMESTR("XTCTrajectoryFileWriter.XTCTrajectoryFileWriter"), /*tp_name*/
+  sizeof(struct __pyx_obj_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, /*tp_dealloc*/
+  __pyx_tp_dealloc_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -2703,34 +2627,34 @@ static PyTypeObject __pyx_type_23XTCTrajectoryFileReader_XTCTrajectoryFileReader
   0, /*reserved*/
   #endif
   0, /*tp_repr*/
-  &__pyx_tp_as_number_XTCTrajectoryFileReader, /*tp_as_number*/
-  &__pyx_tp_as_sequence_XTCTrajectoryFileReader, /*tp_as_sequence*/
-  &__pyx_tp_as_mapping_XTCTrajectoryFileReader, /*tp_as_mapping*/
+  &__pyx_tp_as_number_XTCTrajectoryFileWriter, /*tp_as_number*/
+  &__pyx_tp_as_sequence_XTCTrajectoryFileWriter, /*tp_as_sequence*/
+  &__pyx_tp_as_mapping_XTCTrajectoryFileWriter, /*tp_as_mapping*/
   0, /*tp_hash*/
   0, /*tp_call*/
   0, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
-  &__pyx_tp_as_buffer_XTCTrajectoryFileReader, /*tp_as_buffer*/
+  &__pyx_tp_as_buffer_XTCTrajectoryFileWriter, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  __Pyx_DOCSTR("XTC trajectory file reader."), /*tp_doc*/
-  __pyx_tp_traverse_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, /*tp_traverse*/
-  __pyx_tp_clear_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, /*tp_clear*/
+  __Pyx_DOCSTR("XTC trajectory file writer."), /*tp_doc*/
+  __pyx_tp_traverse_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, /*tp_traverse*/
+  __pyx_tp_clear_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, /*tp_methods*/
+  __pyx_methods_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, /*tp_getset*/
+  __pyx_getsets_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pf_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__, /*tp_init*/
+  __pyx_pf_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, /*tp_new*/
+  __pyx_tp_new_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -2751,8 +2675,8 @@ static PyMethodDef __pyx_methods[] = {
 #if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    __Pyx_NAMESTR("XTCTrajectoryFileReader"),
-    __Pyx_DOCSTR(__pyx_k_17), /* m_doc */
+    __Pyx_NAMESTR("XTCTrajectoryFileWriter"),
+    __Pyx_DOCSTR(__pyx_k_12), /* m_doc */
     -1, /* m_size */
     __pyx_methods /* m_methods */,
     NULL, /* m_reload */
@@ -2764,33 +2688,24 @@ static struct PyModuleDef __pyx_moduledef = {
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_1, __pyx_k_1, sizeof(__pyx_k_1), 0, 0, 1, 0},
-  {&__pyx_kp_s_11, __pyx_k_11, sizeof(__pyx_k_11), 0, 0, 1, 0},
-  {&__pyx_kp_s_13, __pyx_k_13, sizeof(__pyx_k_13), 0, 0, 1, 0},
-  {&__pyx_kp_s_14, __pyx_k_14, sizeof(__pyx_k_14), 0, 0, 1, 0},
-  {&__pyx_kp_s_15, __pyx_k_15, sizeof(__pyx_k_15), 0, 0, 1, 0},
-  {&__pyx_n_s_16, __pyx_k_16, sizeof(__pyx_k_16), 0, 0, 1, 1},
-  {&__pyx_n_s_18, __pyx_k_18, sizeof(__pyx_k_18), 0, 0, 1, 1},
-  {&__pyx_n_s_19, __pyx_k_19, sizeof(__pyx_k_19), 0, 0, 1, 1},
+  {&__pyx_n_s_11, __pyx_k_11, sizeof(__pyx_k_11), 0, 0, 1, 1},
+  {&__pyx_n_s_13, __pyx_k_13, sizeof(__pyx_k_13), 0, 0, 1, 1},
+  {&__pyx_n_s_14, __pyx_k_14, sizeof(__pyx_k_14), 0, 0, 1, 1},
   {&__pyx_kp_s_3, __pyx_k_3, sizeof(__pyx_k_3), 0, 0, 1, 0},
-  {&__pyx_kp_s_4, __pyx_k_4, sizeof(__pyx_k_4), 0, 0, 1, 0},
   {&__pyx_kp_s_5, __pyx_k_5, sizeof(__pyx_k_5), 0, 0, 1, 0},
   {&__pyx_kp_s_7, __pyx_k_7, sizeof(__pyx_k_7), 0, 0, 1, 0},
   {&__pyx_kp_s_9, __pyx_k_9, sizeof(__pyx_k_9), 0, 0, 1, 0},
   {&__pyx_n_s__CLibraryError, __pyx_k__CLibraryError, sizeof(__pyx_k__CLibraryError), 0, 0, 1, 1},
   {&__pyx_n_s__Close, __pyx_k__Close, sizeof(__pyx_k__Close), 0, 0, 1, 1},
-  {&__pyx_n_s__Entry, __pyx_k__Entry, sizeof(__pyx_k__Entry), 0, 0, 1, 1},
-  {&__pyx_n_s__GetSummary, __pyx_k__GetSummary, sizeof(__pyx_k__GetSummary), 0, 0, 1, 1},
   {&__pyx_n_s__LogFileActive, __pyx_k__LogFileActive, sizeof(__pyx_k__LogFileActive), 0, 0, 1, 1},
   {&__pyx_n_s__Open, __pyx_k__Open, sizeof(__pyx_k__Open), 0, 0, 1, 1},
-  {&__pyx_n_s__ReadHeader, __pyx_k__ReadHeader, sizeof(__pyx_k__ReadHeader), 0, 0, 1, 1},
   {&__pyx_n_s__RestoreOwnerData, __pyx_k__RestoreOwnerData, sizeof(__pyx_k__RestoreOwnerData), 0, 0, 1, 1},
-  {&__pyx_n_s__Start, __pyx_k__Start, sizeof(__pyx_k__Start), 0, 0, 1, 1},
-  {&__pyx_n_s__Stop, __pyx_k__Stop, sizeof(__pyx_k__Stop), 0, 0, 1, 1},
+  {&__pyx_n_s__WriteHeader, __pyx_k__WriteHeader, sizeof(__pyx_k__WriteHeader), 0, 0, 1, 1},
   {&__pyx_n_s__WriteOwnerData, __pyx_k__WriteOwnerData, sizeof(__pyx_k__WriteOwnerData), 0, 0, 1, 1},
   {&__pyx_n_s__XTCTrajectory, __pyx_k__XTCTrajectory, sizeof(__pyx_k__XTCTrajectory), 0, 0, 1, 1},
   {&__pyx_n_s____main__, __pyx_k____main__, sizeof(__pyx_k____main__), 0, 0, 1, 1},
   {&__pyx_n_s____test__, __pyx_k____test__, sizeof(__pyx_k____test__), 0, 0, 1, 1},
-  {&__pyx_n_s__atoms, __pyx_k__atoms, sizeof(__pyx_k__atoms), 0, 0, 1, 1},
+  {&__pyx_n_s__any, __pyx_k__any, sizeof(__pyx_k__any), 0, 0, 1, 1},
   {&__pyx_n_s__coordinates3, __pyx_k__coordinates3, sizeof(__pyx_k__coordinates3), 0, 0, 1, 1},
   {&__pyx_n_s__inPath, __pyx_k__inPath, sizeof(__pyx_k__inPath), 0, 0, 1, 1},
   {&__pyx_n_s__log, __pyx_k__log, sizeof(__pyx_k__log), 0, 0, 1, 1},
@@ -2801,73 +2716,77 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s__pBabel, __pyx_k__pBabel, sizeof(__pyx_k__pBabel), 0, 0, 1, 1},
   {&__pyx_n_s__pCore, __pyx_k__pCore, sizeof(__pyx_k__pCore), 0, 0, 1, 1},
   {&__pyx_n_s__path, __pyx_k__path, sizeof(__pyx_k__path), 0, 0, 1, 1},
+  {&__pyx_n_s__precision, __pyx_k__precision, sizeof(__pyx_k__precision), 0, 0, 1, 1},
+  {&__pyx_n_s__r, __pyx_k__r, sizeof(__pyx_k__r), 0, 0, 1, 1},
   {&__pyx_n_s__system, __pyx_k__system, sizeof(__pyx_k__system), 0, 0, 1, 1},
-  {&__pyx_n_s__w, __pyx_k__w, sizeof(__pyx_k__w), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
+  __pyx_builtin_any = __Pyx_GetName(__pyx_b, __pyx_n_s__any); if (!__pyx_builtin_any) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
+  __pyx_L1_error:;
+  return -1;
 }
 
 static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants");
 
-  /* "XTCTrajectoryFileReader.pyx":37
+  /* "XTCTrajectoryFileWriter.pyx":36
  * 
  *         if owner.coordinates3 is None:
- *             raise CLibraryError ("Allocate system coordinates first.")             # <<<<<<<<<<<<<<
+ *             raise CLibraryError ("System is missing coordinates.")             # <<<<<<<<<<<<<<
  * 
- *         # How to use exdrOK here? (exdrOK = 0)
+ *         if not any ((precision == 10, precision == 100, precision == 1000, )):
  */
-  __pyx_k_tuple_2 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_k_tuple_2 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(((PyObject *)__pyx_k_tuple_2));
   __Pyx_INCREF(((PyObject *)__pyx_kp_s_1));
   PyTuple_SET_ITEM(__pyx_k_tuple_2, 0, ((PyObject *)__pyx_kp_s_1));
   __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_1));
   __Pyx_GIVEREF(((PyObject *)__pyx_k_tuple_2));
 
-  /* "XTCTrajectoryFileReader.pyx":50
- *         self.fb = Buffer_Allocate (numberOfAtoms)
- *         if self.fb == NULL:
- *             raise CLibraryError ("Cannot allocate frame buffer.")             # <<<<<<<<<<<<<<
+  /* "XTCTrajectoryFileWriter.pyx":39
+ * 
+ *         if not any ((precision == 10, precision == 100, precision == 1000, )):
+ *             raise CLibraryError ("Precision can only adopt values of 10, 100 and 1000.")             # <<<<<<<<<<<<<<
  * 
  *         self.path           = path
  */
-  __pyx_k_tuple_6 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_k_tuple_4 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_k_tuple_4));
+  __Pyx_INCREF(((PyObject *)__pyx_kp_s_3));
+  PyTuple_SET_ITEM(__pyx_k_tuple_4, 0, ((PyObject *)__pyx_kp_s_3));
+  __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_3));
+  __Pyx_GIVEREF(((PyObject *)__pyx_k_tuple_4));
+
+  /* "XTCTrajectoryFileWriter.pyx":51
+ *         self.fb = Buffer_Allocate (natoms)
+ *         if self.fb == NULL:
+ *             raise CLibraryError ("Cannot allocate frame buffer.")             # <<<<<<<<<<<<<<
+ * 
+ *         self.Open ()
+ */
+  __pyx_k_tuple_6 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(((PyObject *)__pyx_k_tuple_6));
   __Pyx_INCREF(((PyObject *)__pyx_kp_s_5));
   PyTuple_SET_ITEM(__pyx_k_tuple_6, 0, ((PyObject *)__pyx_kp_s_5));
   __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_5));
   __Pyx_GIVEREF(((PyObject *)__pyx_k_tuple_6));
 
-  /* "XTCTrajectoryFileReader.pyx":76
+  /* "XTCTrajectoryFileWriter.pyx":73
  *         cdef char *path
  *         if self.isOpen:
  *             raise CLibraryError ("File has already been opened.")             # <<<<<<<<<<<<<<
  *         else:
  *             path = self.path
  */
-  __pyx_k_tuple_8 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_k_tuple_8 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(((PyObject *)__pyx_k_tuple_8));
   __Pyx_INCREF(((PyObject *)__pyx_kp_s_7));
   PyTuple_SET_ITEM(__pyx_k_tuple_8, 0, ((PyObject *)__pyx_kp_s_7));
   __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_7));
   __Pyx_GIVEREF(((PyObject *)__pyx_k_tuple_8));
-
-  /* "XTCTrajectoryFileReader.pyx":90
- *             if self.isOpen:
- *                 summary = log.GetSummary ()
- *                 summary.Start ("XTC file")             # <<<<<<<<<<<<<<
- *                 summary.Entry ("Number of Atoms",  "%s" % self.numberOfAtoms)
- *                 summary.Entry ("Number of Frames", "%s" % self.numberOfFrames)
- */
-  __pyx_k_tuple_12 = PyTuple_New(1); if (unlikely(!__pyx_k_tuple_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(((PyObject *)__pyx_k_tuple_12));
-  __Pyx_INCREF(((PyObject *)__pyx_kp_s_11));
-  PyTuple_SET_ITEM(__pyx_k_tuple_12, 0, ((PyObject *)__pyx_kp_s_11));
-  __Pyx_GIVEREF(((PyObject *)__pyx_kp_s_11));
-  __Pyx_GIVEREF(((PyObject *)__pyx_k_tuple_12));
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2878,17 +2797,21 @@ static int __Pyx_InitCachedConstants(void) {
 static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_int_10 = PyInt_FromLong(10); if (unlikely(!__pyx_int_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_int_100 = PyInt_FromLong(100); if (unlikely(!__pyx_int_100)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_int_1000 = PyInt_FromLong(1000); if (unlikely(!__pyx_int_1000)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   return 0;
   __pyx_L1_error:;
   return -1;
 }
 
 #if PY_MAJOR_VERSION < 3
-PyMODINIT_FUNC initXTCTrajectoryFileReader(void); /*proto*/
-PyMODINIT_FUNC initXTCTrajectoryFileReader(void)
+PyMODINIT_FUNC initXTCTrajectoryFileWriter(void); /*proto*/
+PyMODINIT_FUNC initXTCTrajectoryFileWriter(void)
 #else
-PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void); /*proto*/
-PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
+PyMODINIT_FUNC PyInit_XTCTrajectoryFileWriter(void); /*proto*/
+PyMODINIT_FUNC PyInit_XTCTrajectoryFileWriter(void)
 #endif
 {
   PyObject *__pyx_t_1 = NULL;
@@ -2904,7 +2827,7 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
           Py_FatalError("failed to import 'refnanny' module");
   }
   #endif
-  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)");
+  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_XTCTrajectoryFileWriter(void)");
   if ( __Pyx_check_binary_version() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -2920,7 +2843,7 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
   #endif
   /*--- Module creation code ---*/
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4(__Pyx_NAMESTR("XTCTrajectoryFileReader"), __pyx_methods, __Pyx_DOCSTR(__pyx_k_17), 0, PYTHON_API_VERSION);
+  __pyx_m = Py_InitModule4(__Pyx_NAMESTR("XTCTrajectoryFileWriter"), __pyx_methods, __Pyx_DOCSTR(__pyx_k_12), 0, PYTHON_API_VERSION);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -2933,7 +2856,7 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
   if (__Pyx_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   /*--- Initialize various global constants etc. ---*/
   if (unlikely(__Pyx_InitGlobals() < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (__pyx_module_is_main_XTCTrajectoryFileReader) {
+  if (__pyx_module_is_main_XTCTrajectoryFileWriter) {
     if (__Pyx_SetAttrString(__pyx_m, "__name__", __pyx_n_s____main__) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   /*--- Builtin init code ---*/
@@ -2944,17 +2867,17 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_23XTCTrajectoryFileReader_XTCTrajectoryFileReader) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   {
-    PyObject *wrapper = __Pyx_GetAttrString((PyObject *)&__pyx_type_23XTCTrajectoryFileReader_XTCTrajectoryFileReader, "__init__"); if (unlikely(!wrapper)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    PyObject *wrapper = __Pyx_GetAttrString((PyObject *)&__pyx_type_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter, "__init__"); if (unlikely(!wrapper)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (Py_TYPE(wrapper) == &PyWrapperDescr_Type) {
-      __pyx_wrapperbase_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__.doc = __pyx_doc_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_23XTCTrajectoryFileReader_23XTCTrajectoryFileReader_3__init__;
+      __pyx_wrapperbase_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
+      __pyx_wrapperbase_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__.doc = __pyx_doc_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__;
+      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_23XTCTrajectoryFileWriter_23XTCTrajectoryFileWriter_3__init__;
     }
   }
-  if (__Pyx_SetAttrString(__pyx_m, "XTCTrajectoryFileReader", (PyObject *)&__pyx_type_23XTCTrajectoryFileReader_XTCTrajectoryFileReader) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_23XTCTrajectoryFileReader_XTCTrajectoryFileReader = &__pyx_type_23XTCTrajectoryFileReader_XTCTrajectoryFileReader;
+  if (__Pyx_SetAttrString(__pyx_m, "XTCTrajectoryFileWriter", (PyObject *)&__pyx_type_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter = &__pyx_type_23XTCTrajectoryFileWriter_XTCTrajectoryFileWriter;
   /*--- Type import code ---*/
   __pyx_ptype_5pCore_7Vector3_Vector3 = __Pyx_ImportType("pCore.Vector3", "Vector3", sizeof(struct __pyx_obj_5pCore_7Vector3_Vector3), 1); if (unlikely(!__pyx_ptype_5pCore_7Vector3_Vector3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_5pCore_8Matrix33_Matrix33 = __Pyx_ImportType("pCore.Matrix33", "Matrix33", sizeof(struct __pyx_obj_5pCore_8Matrix33_Matrix33), 1); if (unlikely(!__pyx_ptype_5pCore_8Matrix33_Matrix33)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 45; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -2976,8 +2899,8 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
   Py_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   /*--- Execution code ---*/
 
-  /* "XTCTrajectoryFileReader.pyx":10
- * """XTCTrajectoryFileReader is a class for reading XTC trajectories."""
+  /* "XTCTrajectoryFileWriter.pyx":10
+ * """XTCTrajectoryFileWriter is a class for writing XTC trajectories."""
  * 
  * from pCore    import logFile, LogFileActive, CLibraryError             # <<<<<<<<<<<<<<
  * from pBabel   import SystemGeometryTrajectory
@@ -3011,7 +2934,7 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":11
+  /* "XTCTrajectoryFileWriter.pyx":11
  * 
  * from pCore    import logFile, LogFileActive, CLibraryError
  * from pBabel   import SystemGeometryTrajectory             # <<<<<<<<<<<<<<
@@ -3020,46 +2943,46 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
  */
   __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(((PyObject *)__pyx_t_3));
-  __Pyx_INCREF(((PyObject *)__pyx_n_s_16));
-  PyList_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_n_s_16));
-  __Pyx_GIVEREF(((PyObject *)__pyx_n_s_16));
+  __Pyx_INCREF(((PyObject *)__pyx_n_s_11));
+  PyList_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_n_s_11));
+  __Pyx_GIVEREF(((PyObject *)__pyx_n_s_11));
   __pyx_t_2 = __Pyx_Import(((PyObject *)__pyx_n_s__pBabel), ((PyObject *)__pyx_t_3), -1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(((PyObject *)__pyx_t_3)); __pyx_t_3 = 0;
-  __pyx_t_3 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s_16); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s_11); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_16, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_11, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":85
+  /* "XTCTrajectoryFileWriter.pyx":82
  * 
  * 
  *     def Summary (self, log = logFile):             # <<<<<<<<<<<<<<
  *         """Summary."""
- *         if LogFileActive (log):
+ *         pass
  */
-  __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__logFile); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__logFile); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_k_10 = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":132
+  /* "XTCTrajectoryFileWriter.pyx":126
  * # Helper functions
  * #===============================================================================
- * def XTCTrajectory_ToSystemGeometryTrajectory (inPath, outPath, system):             # <<<<<<<<<<<<<<
- *     """Convert an XTC trajectory to a SystemGeometryTrajectory."""
- *     inTrajectory  = XTCTrajectoryFileReader  (inPath,  system)
+ * def XTCTrajectory_FromSystemGeometryTrajectory (outPath, inPath, system):             # <<<<<<<<<<<<<<
+ *     """Convert a SystemGeometryTrajectory to an XTC trajectory."""
+ *     inTrajectory  = SystemGeometryTrajectory (inPath,  system, mode = "r")
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_23XTCTrajectoryFileReader_XTCTrajectory_ToSystemGeometryTrajectory, NULL, __pyx_n_s_18); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_23XTCTrajectoryFileWriter_XTCTrajectory_FromSystemGeometryTrajectory, NULL, __pyx_n_s_13); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_19, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_14, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "XTCTrajectoryFileReader.pyx":1
+  /* "XTCTrajectoryFileWriter.pyx":1
  * #-------------------------------------------------------------------------------             # <<<<<<<<<<<<<<
- * # . File      : XTCTrajectoryFileReader.pyx
+ * # . File      : XTCTrajectoryFileWriter.pyx
  * # . Program   : pDynamo-1.8.0                           (http://www.pdynamo.org)
  */
   __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -3072,10 +2995,10 @@ PyMODINIT_FUNC PyInit_XTCTrajectoryFileReader(void)
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   if (__pyx_m) {
-    __Pyx_AddTraceback("init XTCTrajectoryFileReader", __pyx_clineno, __pyx_lineno, __pyx_filename);
+    __Pyx_AddTraceback("init XTCTrajectoryFileWriter", __pyx_clineno, __pyx_lineno, __pyx_filename);
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init XTCTrajectoryFileReader");
+    PyErr_SetString(PyExc_ImportError, "init XTCTrajectoryFileWriter");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3103,6 +3026,21 @@ end:
     return (__Pyx_RefNannyAPIStruct *)r;
 }
 #endif /* CYTHON_REFNANNY */
+
+static PyObject *__Pyx_GetName(PyObject *dict, PyObject *name) {
+    PyObject *result;
+    result = PyObject_GetAttr(dict, name);
+    if (!result) {
+        if (dict != __pyx_b) {
+            PyErr_Clear();
+            result = PyObject_GetAttr(__pyx_b, name);
+        }
+        if (!result) {
+            PyErr_SetObject(PyExc_NameError, name);
+        }
+    }
+    return result;
+}
 
 static void __Pyx_RaiseArgtupleInvalid(
     const char* func_name,
@@ -3220,21 +3158,6 @@ invalid_keyword:
     #endif
 bad:
     return -1;
-}
-
-static PyObject *__Pyx_GetName(PyObject *dict, PyObject *name) {
-    PyObject *result;
-    result = PyObject_GetAttr(dict, name);
-    if (!result) {
-        if (dict != __pyx_b) {
-            PyErr_Clear();
-            result = PyObject_GetAttr(__pyx_b, name);
-        }
-        if (!result) {
-            PyErr_SetObject(PyExc_NameError, name);
-        }
-    }
-    return result;
 }
 
 static CYTHON_INLINE void __Pyx_ErrRestore(PyObject *type, PyObject *value, PyObject *tb) {
@@ -3456,31 +3379,6 @@ bad:
     Py_XDECREF(py_import);
     Py_XDECREF(empty_dict);
     return module;
-}
-
-static CYTHON_INLINE PyObject *__Pyx_PyInt_to_py_Integer(Integer val) {
-    const Integer neg_one = (Integer)-1, const_zero = (Integer)0;
-    const int is_unsigned = const_zero < neg_one;
-    if ((sizeof(Integer) == sizeof(char))  ||
-        (sizeof(Integer) == sizeof(short))) {
-        return PyInt_FromLong((long)val);
-    } else if ((sizeof(Integer) == sizeof(int)) ||
-               (sizeof(Integer) == sizeof(long))) {
-        if (is_unsigned)
-            return PyLong_FromUnsignedLong((unsigned long)val);
-        else
-            return PyInt_FromLong((long)val);
-    } else if (sizeof(Integer) == sizeof(PY_LONG_LONG)) {
-        if (is_unsigned)
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG)val);
-        else
-            return PyLong_FromLongLong((PY_LONG_LONG)val);
-    } else {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&val;
-        return _PyLong_FromByteArray(bytes, sizeof(Integer),
-                                     little, !is_unsigned);
-    }
 }
 
 static CYTHON_INLINE Integer __Pyx_PyInt_from_py_Integer(PyObject* x) {

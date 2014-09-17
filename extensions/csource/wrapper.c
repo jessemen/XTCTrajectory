@@ -30,6 +30,7 @@ Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rv
     /* xdrfile variables */
     float   *s = (float *) fb;
     float   time;
+    /* Make use of the value of prec? */
     float   prec;
     matrix  box;
 
@@ -47,24 +48,27 @@ Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rv
     return True;
 }
 
-/*
-enum { exdrOK, exdrHEADER, exdrSTRING, exdrDOUBLE, 
-    exdrINT, exdrFLOAT, exdrUINT, exdr3DX, exdrCLOSE, exdrMAGIC,
-    exdrNOMEM, exdrENDOFFILE, exdrFILENOTFOUND, exdrNR };
+Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer step, Integer prec) {
+    Real    *s = coordinates3->data;
+    Integer atomindex;
 
-char *exdr_message[exdrNR] = {
-    "OK", 
-    "Header",
-    "String", 
-    "Double",
-    "Integer",
-    "Float",
-    "Unsigned integer",
-    "Compressed 3D coordinate",
-    "Closing file",
-    "Magic number",
-    "Not enough memory",
-    "End of file",
-    "File not found" 
-};
-*/
+    /* xdrfile variables */
+    float   *d = (float *) fb;
+    float   time;
+    float   precc = 1000.;
+    matrix  box;
+
+    /* Convert from Real type of pDynamo to rvec (basically 3x float) type of xdrfile */
+    for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
+        *(d    ) = (float) *(s    );
+        *(d + 1) = (float) *(s + 1);
+        *(d + 2) = (float) *(s + 2);
+    }
+
+    /* if (write_xtc (xd, natoms, step, time, box, fb, (float) prec) != exdrOK) { */
+    if (write_xtc (xd, natoms, step, time, box, fb, precc) != exdrOK) {
+        return False;
+    }
+
+    return True;
+}

@@ -8,3 +8,4 @@
 """A module for reading and writing trajectories in the XTC format of Gromacs."""
 
 from XTCTrajectoryFileReader        import XTCTrajectory_ToSystemGeometryTrajectory, XTCTrajectoryFileReader
+from XTCTrajectoryFileWriter        import XTCTrajectory_FromSystemGeometryTrajectory, XTCTrajectoryFileWriter
