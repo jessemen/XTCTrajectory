@@ -17,7 +17,7 @@ else:
 current_directory  = os.getcwd ()
 pxd_directories    = [current_directory, os.path.join (pdynamo_pcore, "extensions/pyrex")]
 
-# Compile all files in the cython directory?
+# Decide between taking all files in the current directory or the files from the command line
 if nargs > 2:
     sources = [os.path.abspath (filename) for filename in sys.argv[2:]]
 else:

@@ -38,7 +38,7 @@ Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rv
         return False;
     }
 
-    /* Copy converting floats to Reals (doubles) */
+    /* Copy converting rvec (=floats) to Reals (=doubles) */
     for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
         *(d    ) = (Real) *(s    );
         *(d + 1) = (Real) *(s + 1);
@@ -55,18 +55,16 @@ Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3,
     /* xdrfile variables */
     float   *d = (float *) fb;
     float   time;
-    float   precc = 1000.;
     matrix  box;
 
-    /* Convert from Real type of pDynamo to rvec (basically 3x float) type of xdrfile */
+    /* Copy converting from Reals (=doubles) to rvec (=floats) */
     for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
         *(d    ) = (float) *(s    );
         *(d + 1) = (float) *(s + 1);
         *(d + 2) = (float) *(s + 2);
     }
 
-    /* if (write_xtc (xd, natoms, step, time, box, fb, (float) prec) != exdrOK) { */
-    if (write_xtc (xd, natoms, step, time, box, fb, precc) != exdrOK) {
+    if (write_xtc (xd, natoms, step, time, box, fb, (float) prec) != exdrOK) {
         return False;
     }
 

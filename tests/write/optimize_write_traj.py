@@ -30,10 +30,15 @@ mol.DefineNBModel (nb_model)
 
 
 #===========================================================
-traj = XTCTrajectoryFileWriter ("optimize.xtc", mol)
-#traj = SystemGeometryTrajectory ("optimize_traj", mol, mode = "w")
+traj  = XTCTrajectoryFileWriter  ("optimize.xtc",  mol)
 
-ConjugateGradientMinimize_SystemGeometry (mol, logFrequency = 1, maximumIterations = 9999, rmsGradientTolerance = 0.04, trajectories = [(traj, 1)])
+# This will write 189 MB of PKL files
+# traj2 = SystemGeometryTrajectory ("optimize_traj", mol, mode = "w")
+
+
+# ConjugateGradientMinimize_SystemGeometry (mol, logFrequency = 1, maximumIterations = 100, rmsGradientTolerance = 0.04, trajectories = [(traj, 1), (traj2, 1)])
+
+ConjugateGradientMinimize_SystemGeometry (mol, logFrequency = 1, maximumIterations = 100, rmsGradientTolerance = 0.04, trajectories = [(traj, 1)])
 
 
 #===========================================================

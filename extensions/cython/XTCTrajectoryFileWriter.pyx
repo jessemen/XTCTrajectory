@@ -41,7 +41,7 @@ cdef class XTCTrajectoryFileWriter:
         self.path           = path
         self.owner          = owner
         self.precision      = precision
-        self.numberOfAtoms  = len (owner.coordinates3)
+        self.numberOfAtoms  = len (owner.atoms)
         self.numberOfFrames = 0
         self.currentFrame   = 0
 
@@ -106,16 +106,16 @@ cdef class XTCTrajectoryFileWriter:
         cdef Integer        natoms
         cdef Integer        step
         cdef Boolean        result
+
         coordinates3  = self.owner.coordinates3
         precision     = self.precision
         natoms        = self.numberOfAtoms
         step          = self.currentFrame
-
         result = WriteXTCFrame_FromCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, natoms, step, precision)
-        if result != True:
+
+        if result:
             self.currentFrame   = self.currentFrame + 1
             self.numberOfFrames = self.currentFrame
-
         # Returns True or False
         return result
 

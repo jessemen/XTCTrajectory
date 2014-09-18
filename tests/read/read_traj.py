@@ -33,12 +33,13 @@ while trajectory.RestoreOwnerData ():
 
 
 #===========================================================
-direc = "traj"
-
-if not os.path.exists (direc):
-    os.makedirs (direc)
-
-XTCTrajectory_ToSystemGeometryTrajectory ("heat.xtc", direc, mol)
+# This part takes a bit more time to execute, uncomment if you like
+# direc = "traj"
+# 
+# if not os.path.exists (direc):
+#     os.makedirs (direc)
+# 
+# XTCTrajectory_ToSystemGeometryTrajectory ("heat.xtc", direc, mol)
 
 
 #===========================================================
