@@ -29,17 +29,19 @@ cdef extern from "Coordinates3.h":
 
 
 cdef extern from "wrapper.h":
-    cdef rvec     *Buffer_Allocate             (Integer natoms)
-    cdef void      Buffer_Deallocate           (rvec **fb)
-    cdef Boolean   ReadXTCFrame_ToCoordinates3 (CXDRFILE *xd, CCoordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step)
+    cdef rvec     *Buffer_Allocate                (Integer natoms)
+    cdef void      Buffer_Deallocate              (rvec **buffer)
+    cdef Boolean   ReadXTCFrame_ToCoordinates3    (CXDRFILE *xd, CCoordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step, Integer *prec, char *errorMessage)
 
 
 cdef class XTCTrajectoryFileReader:
     cdef public object  isOpen
     cdef public object  owner
     cdef public object  path
-    cdef public object  numberOfFrames
-    cdef public object  numberOfAtoms
-    cdef public object  currentFrame
-    cdef CXDRFILE       *xdrfile
-    cdef rvec           *fb
+    cdef char           _errorMessage[256]
+    cdef Integer        _numberOfFrames
+    cdef Integer        _numberOfAtoms
+    cdef Integer        _currentFrame
+    cdef Integer        _precision
+    cdef CXDRFILE       *_xdrfile
+    cdef rvec           *_buffer

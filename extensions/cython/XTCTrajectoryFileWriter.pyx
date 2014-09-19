@@ -14,40 +14,29 @@ from pBabel   import SystemGeometryTrajectory
 cdef class XTCTrajectoryFileWriter:
     """XTC trajectory file writer."""
 
-    def __getmodule__ (self):
-        return "XTCTrajectory"
-
-
-    def __len__ (self):
-        return self.numberOfFrames
-
-
     def __dealloc__ (self):
         """Finalization."""
-        Buffer_Deallocate (&self.fb)
+        Buffer_Deallocate (&self._buffer)
         self.Close ()
 
 
     def __init__ (self, path, owner, precision = 100):
         """Constructor."""
-        cdef Integer natoms
-
         if owner.coordinates3 is None:
             raise CLibraryError ("System is missing coordinates.")
 
         if not any ((precision == 10, precision == 100, precision == 1000, )):
             raise CLibraryError ("Precision can only adopt values of 10, 100 and 1000.")
 
-        self.path           = path
-        self.owner          = owner
-        self.precision      = precision
-        self.numberOfAtoms  = len (owner.atoms)
-        self.numberOfFrames = 0
-        self.currentFrame   = 0
+        self.path            = path
+        self.owner           = owner
+        self._precision      = precision
+        self._numberOfAtoms  = len (owner.atoms)
+        self._numberOfFrames = 0
+        self._currentFrame   = 0
 
-        natoms = self.numberOfAtoms
-        self.fb = Buffer_Allocate (natoms)
-        if self.fb == NULL:
+        self._buffer = Buffer_Allocate (self._numberOfAtoms)
+        if self._buffer == NULL:
             raise CLibraryError ("Cannot allocate frame buffer.")
 
         self.Open ()
@@ -59,11 +48,8 @@ cdef class XTCTrajectoryFileWriter:
     def Close (self):
         """Close the file."""
         if self.isOpen:
-            xdrfile_close (self.xdrfile)
+            xdrfile_close (self._xdrfile)
             self.isOpen = False
-        # This will never happen?
-        #else:
-        #    raise CLibraryError ("Cannot close file.")
 
 
     def Open (self):
@@ -73,15 +59,23 @@ cdef class XTCTrajectoryFileWriter:
             raise CLibraryError ("File has already been opened.")
         else:
             path = self.path
-            self.xdrfile = xdrfile_open (path, "w")
-            if (self.xdrfile == NULL):
+            self._xdrfile = xdrfile_open (path, "w")
+            if (self._xdrfile == NULL):
                 raise CLibraryError ("Cannot open file %s" % self.path)
             self.isOpen  = True
 
 
     def Summary (self, log = logFile):
         """Summary."""
-        pass
+        if LogFileActive (log):
+            # The condition is commented out to make it work with ConjugateGradientMinimize_SystemGeometry
+            # if self.isOpen:
+            summary = log.GetSummary ()
+            summary.Start ("XTC File Writer")
+            summary.Entry ("Number of Atoms"    , "%s" % self._numberOfAtoms  )
+            summary.Entry ("Frames Written"     , "%s" % self._numberOfFrames )
+            summary.Entry ("Level of Precision" , "%d" % self._precision      )
+            summary.Stop ()
 
 
     def WriteFooter (self):
@@ -102,22 +96,45 @@ cdef class XTCTrajectoryFileWriter:
     def WriteOwnerData (self):
         """Write data from the owner to a frame."""
         cdef Coordinates3   coordinates3
-        cdef Integer        precision
-        cdef Integer        natoms
-        cdef Integer        step
         cdef Boolean        result
 
         coordinates3  = self.owner.coordinates3
-        precision     = self.precision
-        natoms        = self.numberOfAtoms
-        step          = self.currentFrame
-        result = WriteXTCFrame_FromCoordinates3 (self.xdrfile, coordinates3.cObject, self.fb, natoms, step, precision)
+        result = WriteXTCFrame_FromCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, self._currentFrame, self._precision, self._errorMessage)
+        if result == CTrue:
+            self._currentFrame   = self._currentFrame + 1
+            self._numberOfFrames = self._currentFrame
+            return True
+        else:
+            return False
 
-        if result:
-            self.currentFrame   = self.currentFrame + 1
-            self.numberOfFrames = self.currentFrame
-        # Returns True or False
-        return result
+
+    def __getmodule__ (self):
+        return "XTCTrajectory"
+
+
+    # The following methods convert C variables to Python objects
+    def __len__ (self):
+        return self._numberOfFrames
+
+
+    property currentFrame:
+        def __get__ (self):
+            return self._currentFrame
+
+
+    property numberOfFrames:
+        def __get__ (self):
+            return self._numberOfFrames
+
+
+    property precision:
+        def __get__ (self):
+            return self._precision
+
+
+    property message:
+        def __get__ (self):
+            return self._errorMessage
 
 
 #===============================================================================

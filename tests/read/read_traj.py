@@ -29,7 +29,9 @@ trajectory.Summary ()
 
 while trajectory.RestoreOwnerData ():
     logFile.Text ("Frame count: %d\n" % trajectory.currentFrame)
-    #XYZFile_FromSystem ("sav%3d.xyz" % trajectory.currentFrame, mol)
+    # XYZFile_FromSystem ("sav%3d.xyz" % trajectory.currentFrame, mol)
+
+trajectory.Summary ()
 
 
 #===========================================================

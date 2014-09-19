@@ -8,6 +8,8 @@
 #ifndef _WRAPPER
 #define _WRAPPER
 
+#include <string.h>
+
 #include "xdrfile.h"
 #include "xdrfile_xtc.h"
 
@@ -18,12 +20,15 @@
 #include "Coordinates3.h"
 
 
+extern char *exdr_message[exdrNR];
+
+/* Functions */
 extern rvec     *Buffer_Allocate                 (Integer natoms);
 
 extern void      Buffer_Deallocate               (rvec **buffer);
 
-extern Boolean   ReadXTCFrame_ToCoordinates3     (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step);
+extern Boolean   ReadXTCFrame_ToCoordinates3     (XDRFILE *xd, Coordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step, Integer *prec, char *errorMessage);
 
-extern Boolean   WriteXTCFrame_FromCoordinates3  (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer  step, Integer prec);
+extern Boolean   WriteXTCFrame_FromCoordinates3  (XDRFILE *xd, Coordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer  step, Integer  prec, char *errorMessage);
 
 #endif

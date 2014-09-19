@@ -9,53 +9,63 @@
 
 
 rvec *Buffer_Allocate (Integer natoms) {
-    rvec *fb;
+    rvec *buffer;
+    MEMORY_ALLOCATEARRAY (buffer, natoms, rvec);
 
-    MEMORY_ALLOCATEARRAY (fb, natoms, rvec);
-    return fb; /* If failed, NULL is returned */
+    /* If failed, NULL is returned */
+    return buffer; 
 }
 
-void Buffer_Deallocate (rvec **fb) {
-    if ((fb != NULL) && (*fb != NULL)) {
-        MEMORY_DEALLOCATE (*fb);
+void Buffer_Deallocate (rvec **buffer) {
+    if ((buffer != NULL) && (*buffer != NULL)) {
+        MEMORY_DEALLOCATE (*buffer);
     }
 
     /* If deallocation fails, do nothing */
 }
 
-Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer *step) {
+Boolean ReadXTCFrame_ToCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step, Integer *prec, char *errorMessage) {
     Real    *d = coordinates3->data;
     Integer atomindex;
 
     /* xdrfile variables */
-    float   *s = (float *) fb;
+    float   *s = (float *) buffer;
+    float   precf;
     float   time;
-    /* Make use of the value of prec? */
-    float   prec;
     matrix  box;
+    /* Result will be of enum type - is that correct? */
+    int     result;
 
-    if (read_xtc (xd, natoms, step, &time, box, fb, &prec) != exdrOK) {
+    result = read_xtc (xd, natoms, step, &time, box, buffer, &precf);
+    strcpy (errorMessage, exdr_message[result]);
+
+    if (result != exdrOK) {
         return False;
     }
-
-    /* Copy converting rvec (=floats) to Reals (=doubles) */
-    for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
-        *(d    ) = (Real) *(s    );
-        *(d + 1) = (Real) *(s + 1);
-        *(d + 2) = (Real) *(s + 2);
+    else {
+        *prec = (Integer) precf;
+    
+        /* Copy converting rvec (=floats) to Reals (=doubles) */
+        for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
+            *(d    ) = (Real) *(s    );
+            *(d + 1) = (Real) *(s + 1);
+            *(d + 2) = (Real) *(s + 2);
+        }
+    
+        return True;
     }
-
-    return True;
 }
 
-Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *fb, Integer natoms, Integer step, Integer prec) {
+Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer step, Integer prec, char *errorMessage) {
     Real    *s = coordinates3->data;
     Integer atomindex;
 
     /* xdrfile variables */
-    float   *d = (float *) fb;
+    float   *d = (float *) buffer;
     float   time;
     matrix  box;
+    /* Result will be of enum type - is that correct? */
+    int     result;
 
     /* Copy converting from Reals (=doubles) to rvec (=floats) */
     for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
@@ -64,9 +74,13 @@ Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3,
         *(d + 2) = (float) *(s + 2);
     }
 
-    if (write_xtc (xd, natoms, step, time, box, fb, (float) prec) != exdrOK) {
+    result = write_xtc (xd, natoms, step, time, box, buffer, (float) prec); 
+    strcpy (errorMessage, exdr_message[result]);
+
+    if (result != exdrOK) {
         return False;
     }
-
-    return True;
+    else {
+        return True;
+    }
 }
