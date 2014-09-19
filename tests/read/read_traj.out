@@ -1,0 +1,205 @@
+--------------------------------------------------------------------------------
+                      Infrared fluorescent protein (parent)
+--------------------------------------------------------------------------------
+
+Start Time: Fri Sep 19 17:57:17 2014
+
+----------------------------------------------------------------------------------------------------
+                                      Text File Reader Warnings
+----------------------------------------------------------------------------------------------------
+   Line                                        Message                                     Severity
+----------------------------------------------------------------------------------------------------
+3724                                   Unable to process non-epsilon/sigma nonbond for FE.   Warning
+----------------------------------------------------------------------------------------------------
+
+There have been warnings. Proceed with caution!
+
+
+---------------------- CHARMM Parameter File Line Summary ----------------------
+Angle                  =            624  Bond                   =            251
+Dihedral               =           1054  HBond                  =              1
+Improper               =             74  NonBond                =            131
+Title                  =             18
+--------------------------------------------------------------------------------
+
+-------------------- CHARMM Parameter File Parameter Summary -------------------
+Atom Types             =            131  Angles                 =            623
+Bonds                  =            250  Cmaps                  =              0
+Dihedrals (Nonwild)    =            791  Dihedrals (Wild)       =             92
+Impropers (Nonwild)    =             48  Impropers (Wild)       =             25
+Nonbonds (Nonwild)     =            129  Nonbonds (Wild)        =              0
+Nonbonds 1-4 (Nonwild) =             19  Nonbonds 1-4 (Wild)    =              0
+Urey-Bradleys          =            145
+--------------------------------------------------------------------------------
+
+---------------------- CHARMM Parameter File Line Summary ----------------------
+Angle                  =             60  Bond                   =             23
+Dihedral               =            123  Improper               =             21
+NonBond                =              8  Title                  =              2
+--------------------------------------------------------------------------------
+
+-------------------- CHARMM Parameter File Parameter Summary -------------------
+Atom Types             =             28  Angles                 =             59
+Bonds                  =             22  Cmaps                  =              0
+Dihedrals (Nonwild)    =            107  Dihedrals (Wild)       =              0
+Impropers (Nonwild)    =             18  Impropers (Wild)       =              2
+Nonbonds (Nonwild)     =              7  Nonbonds (Wild)        =              0
+Nonbonds 1-4 (Nonwild) =              0  Nonbonds 1-4 (Wild)    =              0
+Urey-Bradleys          =              3
+--------------------------------------------------------------------------------
+
+---------------------------- CHARMM PSF File Summary ---------------------------
+Acceptors              =              0  Angles                 =          17581
+Atoms                  =          30463  Bonds                  =          22014
+Dihedrals              =          13335  Donors                 =              0
+Exclusions             =              0  Groups                 =              1
+Impropers              =            870  ST2s                   =              0
+Title                  =             11
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Summary for System "REMARKS original generated structure x-plor psf file REMARKS
+--------------------------------------------------------------------------------
+
+---------------------------- Atom Container Summary ----------------------------
+Number of Atoms        =          30463  Number of Heavy Atoms  =          10988
+Number of Hydrogens    =          19475  Number of Unknowns     =              0
+--------------------------------------------------------------------------------
+
+----------------------------- Connectivity Summary -----------------------------
+Atoms                  =          30463
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+                        Summary for Energy Model "CHARMM"
+--------------------------------------------------------------------------------
+
+----------------------------------- Summary for MM Model "CHARMM" ----------------------------------
+LJ 1-4 Scaling                   =          1.000  El. 1-4 Scaling                  =          1.000
+Number of MM Atoms               =          30463  Number of MM Atom Types          =             52
+Total MM Charge                  =          -0.00  Harmonic Bond Terms              =          22014
+Harmonic Bond Parameters         =            101  Harmonic Angle Terms             =          17581
+Harmonic Angle Parameters        =            229  Urey-Bradley Terms               =           4161
+Urey-Bradley Parameters          =             56  Fourier Dihedral Terms           =          14064
+Fourier Dihedral Parameters      =            342  Harmonic Improper Terms          =            870
+Harmonic Improper Parameters     =             38  Exclusions                       =          52619
+1-4 Interactions                 =          13024  LJ Parameters Form               =          AMBER
+LJ Parameters Types              =             52  1-4 LJ Parameters Form           =          AMBER
+1-4 LJ Parameters Types          =             52
+----------------------------------------------------------------------------------------------------
+
+------------------------------- Sequence Summary -------------------------------
+Number of Atoms            =      30463  Number of Components       =       8838
+Number of Entities         =          8  Number of Linear Polymers  =          0
+Number of Links            =          0  Number of Variants         =          0
+--------------------------------------------------------------------------------
+
+-------------------------------- XTC File Reader -------------------------------
+Number of Atoms        =          30463  Frames Read            =              0
+Level of Precision     =              0
+--------------------------------------------------------------------------------
+Frame count: 0
+Frame count: 1
+Frame count: 2
+Frame count: 3
+Frame count: 4
+Frame count: 5
+Frame count: 6
+Frame count: 7
+Frame count: 8
+Frame count: 9
+Frame count: 10
+Frame count: 11
+Frame count: 12
+Frame count: 13
+Frame count: 14
+Frame count: 15
+Frame count: 16
+Frame count: 17
+Frame count: 18
+Frame count: 19
+Frame count: 20
+Frame count: 21
+Frame count: 22
+Frame count: 23
+Frame count: 24
+Frame count: 25
+Frame count: 26
+Frame count: 27
+Frame count: 28
+Frame count: 29
+Frame count: 30
+Frame count: 31
+Frame count: 32
+Frame count: 33
+Frame count: 34
+Frame count: 35
+Frame count: 36
+Frame count: 37
+Frame count: 38
+Frame count: 39
+Frame count: 40
+Frame count: 41
+Frame count: 42
+Frame count: 43
+Frame count: 44
+Frame count: 45
+Frame count: 46
+Frame count: 47
+Frame count: 48
+Frame count: 49
+Frame count: 50
+Frame count: 51
+Frame count: 52
+Frame count: 53
+Frame count: 54
+Frame count: 55
+Frame count: 56
+Frame count: 57
+Frame count: 58
+Frame count: 59
+Frame count: 60
+Frame count: 61
+Frame count: 62
+Frame count: 63
+Frame count: 64
+Frame count: 65
+Frame count: 66
+Frame count: 67
+Frame count: 68
+Frame count: 69
+Frame count: 70
+Frame count: 71
+Frame count: 72
+Frame count: 73
+Frame count: 74
+Frame count: 75
+Frame count: 76
+Frame count: 77
+Frame count: 78
+Frame count: 79
+Frame count: 80
+Frame count: 81
+Frame count: 82
+Frame count: 83
+Frame count: 84
+Frame count: 85
+Frame count: 86
+Frame count: 87
+Frame count: 88
+Frame count: 89
+Frame count: 90
+Frame count: 91
+Frame count: 92
+Frame count: 93
+Frame count: 94
+Frame count: 95
+
+-------------------------------- XTC File Reader -------------------------------
+Number of Atoms        =          30463  Frames Read            =             95
+Level of Precision     =            100
+--------------------------------------------------------------------------------
+
+CPU Time: 4.572s
+
+Stop Time: Fri Sep 19 17:57:22 2014
