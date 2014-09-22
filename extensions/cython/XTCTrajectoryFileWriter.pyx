@@ -113,28 +113,19 @@ cdef class XTCTrajectoryFileWriter:
 
 
     # The following methods convert C variables to Python objects
-    def __len__ (self):
-        return self._numberOfFrames
-
+    def __len__ (self):     return self._numberOfFrames
 
     property currentFrame:
-        def __get__ (self):
-            return self._currentFrame
-
+        def __get__ (self): return self._currentFrame
 
     property numberOfFrames:
-        def __get__ (self):
-            return self._numberOfFrames
-
+        def __get__ (self): return self._numberOfFrames
 
     property precision:
-        def __get__ (self):
-            return self._precision
-
+        def __get__ (self): return self._precision
 
     property message:
-        def __get__ (self):
-            return self._errorMessage
+        def __get__ (self): return self._errorMessage
 
 
 #===============================================================================

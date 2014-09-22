@@ -103,17 +103,23 @@ cdef class XTCTrajectoryFileReader:
         """Restore data from a frame to the owner."""
         cdef Coordinates3   coordinates3
         cdef Boolean        result
+        cdef Integer        foo
 
         coordinates3  = self.owner.coordinates3
-        result = ReadXTCFrame_ToCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, &self._currentFrame, &self._precision, self._errorMessage)
+        result = ReadXTCFrame_ToCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, &foo, &self._precision, self._errorMessage)
         if result == CFalse:
             # Rewind the file to frame 0 (is there a better way than close and open?)
             self.Close ()
             self.Open  ()
             return False
         else:
-            if self._currentFrame > self._numberOfFrames:
-                self._numberOfFrames = self._numberOfFrames + 1
+            self._currentFrame = self._currentFrame + 1
+            if self._numberOfFrames < self._currentFrame:
+                self._numberOfFrames = self._currentFrame
+
+            # This does not seem to work with files produced by MDAnalysis
+            # if self._currentFrame > self._numberOfFrames:
+            #    self._numberOfFrames = self._numberOfFrames + 1
             return True
 
 
@@ -122,28 +128,19 @@ cdef class XTCTrajectoryFileReader:
 
 
     # The following methods convert C variables to Python objects
-    def __len__ (self):
-        return self._numberOfFrames
-
+    def __len__ (self):     return self._numberOfFrames
 
     property currentFrame:
-        def __get__ (self):
-            return self._currentFrame
-
+        def __get__ (self): return self._currentFrame
 
     property numberOfFrames:
-        def __get__ (self):
-            return self._numberOfFrames
-
+        def __get__ (self): return self._numberOfFrames
 
     property precision:
-        def __get__ (self):
-            return self._precision
-
+        def __get__ (self): return self._precision
 
     property message:
-        def __get__ (self):
-            return self._errorMessage
+        def __get__ (self): return self._errorMessage
 
 
 #===============================================================================
