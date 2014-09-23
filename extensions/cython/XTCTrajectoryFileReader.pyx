@@ -109,6 +109,7 @@ cdef class XTCTrajectoryFileReader:
         result = ReadXTCFrame_ToCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, &foo, &self._precision, self._errorMessage)
         if result == CFalse:
             # Rewind the file to frame 0 (is there a better way than close and open?)
+            self._currentFrame = 0
             self.Close ()
             self.Open  ()
             return False
