@@ -72,7 +72,7 @@ cdef class XTCTrajectoryFileReader:
             self.isOpen  = True
 
 
-    def Summary (self, log = logFile):
+    def Summary (self, log=logFile):
         """Summary."""
         if LogFileActive (log):
             if self.isOpen:

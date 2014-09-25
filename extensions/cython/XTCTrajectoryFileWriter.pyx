@@ -20,17 +20,22 @@ cdef class XTCTrajectoryFileWriter:
         self.Close ()
 
 
-    def __init__ (self, path, owner, precision = 100):
+    def __init__ (self, path, owner, compression="medium"):
         """Constructor."""
         if owner.coordinates3 is None:
             raise CLibraryError ("System is missing coordinates.")
 
-        if not any ((precision == 10, precision == 100, precision == 1000, )):
-            raise CLibraryError ("Precision can only adopt values of 10, 100 and 1000.")
+        if compression == "low":
+            self._precision = 1000
+        elif compression == "medium":
+            self._precision = 100
+        elif compression == "high":
+            self._precision = 10
+        else:
+            raise CLibraryError ("Compression level can only adopt values of low, medium or high.")
 
         self.path            = path
         self.owner           = owner
-        self._precision      = precision
         self._numberOfAtoms  = len (owner.atoms)
         self._numberOfFrames = 0
         self._currentFrame   = 0
@@ -65,7 +70,7 @@ cdef class XTCTrajectoryFileWriter:
             self.isOpen  = True
 
 
-    def Summary (self, log = logFile):
+    def Summary (self, log=logFile):
         """Summary."""
         if LogFileActive (log):
             # The condition is commented out to make it work with ConjugateGradientMinimize_SystemGeometry
