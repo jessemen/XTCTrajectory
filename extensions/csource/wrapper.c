@@ -72,6 +72,9 @@ Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3,
     /* Result will be of enum type - is that correct? */
     int     result;
 
+    /* Clear the box */
+    memset (box, 0, sizeof (box));
+
     /* Copy converting from Reals (=doubles) to rvec (=floats) */
     for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
         *(d    ) = (float) (*(s    ) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
