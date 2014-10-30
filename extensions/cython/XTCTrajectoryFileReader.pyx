@@ -40,12 +40,12 @@ cdef class XTCTrajectoryFileReader:
         self._buffer = Buffer_Allocate (self._numberOfAtoms)
         if self._buffer == NULL:
             raise CLibraryError ("Cannot allocate frame buffer.")
-
         self.path            = path
         self.owner           = owner
         self._numberOfFrames = 0
         self._currentFrame   = 0
-        self._precision      = 0
+        self._precision      = 1000
+
         self.Open ()
         # self._Initialize     ()
         # self._Allocate       ()
@@ -103,10 +103,10 @@ cdef class XTCTrajectoryFileReader:
         """Restore data from a frame to the owner."""
         cdef Coordinates3   coordinates3
         cdef Boolean        result
-        cdef Integer        foo
+        cdef Integer        step
 
         coordinates3  = self.owner.coordinates3
-        result = ReadXTCFrame_ToCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, &foo, &self._precision, self._errorMessage)
+        result = ReadXTCFrame_ToCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, &step, self._errorMessage)
         if result == CFalse:
             # Rewind the file to frame 0 (is there a better way than close and open?)
             self._currentFrame = 0

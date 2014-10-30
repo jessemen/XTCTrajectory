@@ -20,25 +20,16 @@ cdef class XTCTrajectoryFileWriter:
         self.Close ()
 
 
-    def __init__ (self, path, owner, compression="medium"):
+    def __init__ (self, path, owner):
         """Constructor."""
         if owner.coordinates3 is None:
             raise CLibraryError ("System is missing coordinates.")
-
-        if compression == "low":
-            self._precision = 1000
-        elif compression == "medium":
-            self._precision = 100
-        elif compression == "high":
-            self._precision = 10
-        else:
-            raise CLibraryError ("Compression level can only adopt values of low, medium or high.")
-
         self.path            = path
         self.owner           = owner
-        self._numberOfAtoms  = len (owner.atoms)
         self._numberOfFrames = 0
+        self._numberOfAtoms  = len (owner.atoms)
         self._currentFrame   = 0
+        self._precision      = 1000
 
         self._buffer = Buffer_Allocate (self._numberOfAtoms)
         if self._buffer == NULL:
@@ -104,7 +95,7 @@ cdef class XTCTrajectoryFileWriter:
         cdef Boolean        result
 
         coordinates3  = self.owner.coordinates3
-        result = WriteXTCFrame_FromCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, self._currentFrame, self._precision, self._errorMessage)
+        result = WriteXTCFrame_FromCoordinates3 (self._xdrfile, coordinates3.cObject, self._buffer, self._numberOfAtoms, self._currentFrame, self._errorMessage)
         if result == CTrue:
             self._currentFrame   = self._currentFrame + 1
             self._numberOfFrames = self._currentFrame

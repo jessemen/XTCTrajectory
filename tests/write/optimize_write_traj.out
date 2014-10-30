@@ -2,7 +2,7 @@
                       Infrared fluorescent protein (parent)
 --------------------------------------------------------------------------------
 
-Start Time: Fri Sep 19 17:08:23 2014
+Start Time: Thu Oct 30 17:01:35 2014
 
 ----------------------------------------------------------------------------------------------------
                                       Text File Reader Warnings
@@ -166,9 +166,9 @@ Iterations             =             50  Function Calls         =             80
 
 -------------------------------- XTC File Writer -------------------------------
 Number of Atoms        =          30463  Frames Written         =             51
-Level of Precision     =            100
+Level of Precision     =           1000
 --------------------------------------------------------------------------------
 
-CPU Time:  1m 2.257s
+CPU Time: 52.290s
 
-Stop Time: Fri Sep 19 17:09:26 2014
+Stop Time: Thu Oct 30 17:02:28 2014

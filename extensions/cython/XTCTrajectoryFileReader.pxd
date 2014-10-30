@@ -6,7 +6,6 @@
 # . License   : CeCILL French Free Software License     (http://www.cecill.info)
 #-------------------------------------------------------------------------------
 from pCore.cDefinitions     cimport Boolean, CFalse, CTrue, Integer, Real
-
 from pCore.Coordinates3     cimport Coordinates3
 # from pCore.Status           cimport Status, Status_Continue
 
@@ -31,7 +30,7 @@ cdef extern from "Coordinates3.h":
 cdef extern from "wrapper.h":
     cdef rvec     *Buffer_Allocate                (Integer natoms)
     cdef void      Buffer_Deallocate              (rvec **buffer)
-    cdef Boolean   ReadXTCFrame_ToCoordinates3    (CXDRFILE *xd, CCoordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step, Integer *prec, char *errorMessage)
+    cdef Boolean   ReadXTCFrame_ToCoordinates3    (CXDRFILE *xd, CCoordinates3 *coordinates3, rvec *buffer, Integer natoms, Integer *step, char *errorMessage)
 
 
 cdef class XTCTrajectoryFileReader:

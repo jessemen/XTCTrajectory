@@ -19,9 +19,7 @@ parameters = (
 )
 
 mol = CHARMMPSFFile_ToSystem ("parent_waterbox.psf", isXPLOR = True, parameters = CHARMMParameterFiles_ToParameters (parameters))
-
 mol.coordinates3 = XYZFile_ToCoordinates3 ("geometry.xyz")
-
 mol.Summary ()
 
 nb_model = NBModelABFS ()
@@ -31,15 +29,12 @@ mol.DefineNBModel (nb_model)
 #===========================================================
 # traj  = XTCTrajectoryFileWriter  ("saved_geometry.xtc",  mol)
 # traj.WriteOwnerData ()
-# 
 # traj.Summary ()
 
 
 #===========================================================
 traj3  = XTCTrajectoryFileWriter  ("optimize.xtc",  mol)
-
 ConjugateGradientMinimize_SystemGeometry (mol, logFrequency = 1, maximumIterations = 50, rmsGradientTolerance = 0.04, trajectories = [(traj3, 1)])
-
 traj3.Summary ()
 
 

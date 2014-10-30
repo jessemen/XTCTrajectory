@@ -17,19 +17,16 @@ parameters = (
 )
 
 mol = CHARMMPSFFile_ToSystem ("parent_waterbox.psf", isXPLOR = True, parameters = CHARMMParameterFiles_ToParameters (parameters))
-
 mol.coordinates3 = XYZFile_ToCoordinates3 ("geometry.xyz")
-
 mol.Summary ()
 
 
-
-trajectory = XTCTrajectoryFileReader ("heat.xtc", mol)
+trajectory = XTCTrajectoryFileReader ("heat_proper.xtc", mol)
 trajectory.Summary ()
 
 while trajectory.RestoreOwnerData ():
     logFile.Text ("Frame count: %d\n" % trajectory.currentFrame)
-    # XYZFile_FromSystem ("sav%3d.xyz" % trajectory.currentFrame, mol)
+    XYZFile_FromSystem ("sav%03d.xyz" % trajectory.currentFrame, mol)
 
 trajectory.Summary ()
 
