@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import Cython.Compiler.Main as main
-
 import os, glob, sys
 
 
@@ -27,5 +26,4 @@ else:
 for source in sources:
     options = main.CompilationOptions (main.default_options)
     options.include_path.extend (pxd_directories)
-
     main.compile (source, options)

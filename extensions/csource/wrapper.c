@@ -68,23 +68,38 @@ Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3,
     float   *d = (float *) buffer;
     float   prec = 1000.;
     float   time = 0.;
+    float   cx, cy, cz, minx, miny, minz, maxx, maxy, maxz;
     matrix  box;
     /* Result will be of enum type - is that correct? */
     int     result;
 
     /* Clear the box */
     memset (box, 0, sizeof (box));
+    memset (&minx, 0, sizeof (float) * 6);
 
     /* Copy converting from Reals (=doubles) to rvec (=floats) */
     for (atomindex = 0; atomindex < natoms; atomindex++, s += 3, d += 3) {
-        *(d    ) = (float) (*(s    ) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
-        *(d + 1) = (float) (*(s + 1) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
-        *(d + 2) = (float) (*(s + 2) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
+        cx = (float) (*(s    ) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
+        cy = (float) (*(s + 1) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
+        cz = (float) (*(s + 2) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
+
+        if      (cx < minx) minx = cx;
+        else if (cx > maxx) maxx = cx;
+        if      (cy < miny) miny = cy;
+        else if (cy > maxy) maxy = cy;
+        if      (cz < minz) minz = cz;
+        else if (cz > maxz) maxz = cz;
+        *(d    ) = cx;
+        *(d + 1) = cy;
+        *(d + 2) = cz;
     }
+
+    box[0][0] = maxx - minx;
+    box[1][1] = maxy - miny;
+    box[2][2] = maxz - minz;
 
     result = write_xtc (xd, natoms, step, time, box, buffer, prec); 
     strcpy (errorMessage, exdr_message[result]);
-
     if (result != exdrOK) {
         return False;
     }
