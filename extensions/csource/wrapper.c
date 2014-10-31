@@ -82,6 +82,9 @@ Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3,
         cx = (float) (*(s    ) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
         cy = (float) (*(s + 1) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
         cz = (float) (*(s + 2) * UNITS_LENGTH_ANGSTROMS_TO_NANOMETERS);
+        *(d    ) = cx;
+        *(d + 1) = cy;
+        *(d + 2) = cz;
 
         if      (cx < minx) minx = cx;
         else if (cx > maxx) maxx = cx;
@@ -89,9 +92,6 @@ Boolean WriteXTCFrame_FromCoordinates3 (XDRFILE *xd, Coordinates3 *coordinates3,
         else if (cy > maxy) maxy = cy;
         if      (cz < minz) minz = cz;
         else if (cz > maxz) maxz = cz;
-        *(d    ) = cx;
-        *(d + 1) = cy;
-        *(d + 2) = cz;
     }
 
     box[0][0] = maxx - minx;
