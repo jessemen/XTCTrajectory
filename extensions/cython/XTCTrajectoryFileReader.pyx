@@ -25,17 +25,17 @@ cdef class XTCTrajectoryFileReader:
         cdef Integer  numberOfSystemAtoms
         cdef Integer  status
 
-        if owner.coordinates3 is None:
-            raise CLibraryError ("Allocate system coordinates first.")
-
         # How to use exdrOK here? (exdrOK = 0)
         status = read_xtc_natoms (path, &self._numberOfAtoms)
         if status != 0:
             raise CLibraryError ("Cannot read the number of atoms from %s" % path)
 
-        numberOfSystemAtoms = len (owner.atoms)
-        if (numberOfSystemAtoms != self._numberOfAtoms):
-            raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (numberOfSystemAtoms, self._numberOfAtoms))
+        if owner.coordinates3 is None:
+            owner.coordinates3 = Coordinates3.WithExtent (self._numberOfAtoms)
+        else:
+            numberOfSystemAtoms = len (owner.atoms)
+            if (numberOfSystemAtoms != self._numberOfAtoms):
+                raise CLibraryError ("System has %d atoms but there are %d atoms in XTC file." (numberOfSystemAtoms, self._numberOfAtoms))
 
         self._buffer = Buffer_Allocate (self._numberOfAtoms)
         if self._buffer == NULL:
