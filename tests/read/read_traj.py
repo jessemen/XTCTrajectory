@@ -21,7 +21,7 @@ mol.coordinates3 = XYZFile_ToCoordinates3 ("geometry.xyz")
 mol.Summary ()
 
 
-trajectory = XTCTrajectoryFileReader ("heat_proper.xtc", mol)
+trajectory = XTCTrajectoryFileReader ("heat.xtc", mol)
 trajectory.Summary ()
 
 while trajectory.RestoreOwnerData ():

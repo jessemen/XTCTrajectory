@@ -8,7 +8,6 @@
 """XTCTrajectoryFileWriter is a class for writing XTC trajectories."""
 
 from pCore    import logFile, LogFileActive, CLibraryError
-from pBabel   import SystemGeometryTrajectory
 
 
 cdef class XTCTrajectoryFileWriter:
@@ -74,21 +73,6 @@ cdef class XTCTrajectoryFileWriter:
             summary.Stop ()
 
 
-    def WriteFooter (self):
-        """Write the trajectory footer."""
-        pass
-
-
-    def WriteHeader (self):
-        """Write the trajectory header."""
-        pass
-
-
-    def AssignOwnerData (self):
-        """Assign owner data to the trajectory."""
-        pass
-
-
     def WriteOwnerData (self):
         """Write data from the owner to a frame."""
         cdef Coordinates3   coordinates3
@@ -104,9 +88,20 @@ cdef class XTCTrajectoryFileWriter:
             return False
 
 
+    def WriteFooter (self):
+        """Write the trajectory footer."""
+        pass
+
+    def WriteHeader (self):
+        """Write the trajectory header."""
+        pass
+
+    def AssignOwnerData (self):
+        """Assign owner data to the trajectory."""
+        pass
+
     def __getmodule__ (self):
         return "XTCTrajectory"
-
 
     # The following methods convert C variables to Python objects
     def __len__ (self):     return self._numberOfFrames
@@ -122,18 +117,3 @@ cdef class XTCTrajectoryFileWriter:
 
     property message:
         def __get__ (self): return self._errorMessage
-
-
-#===============================================================================
-# Helper functions
-#===============================================================================
-def XTCTrajectory_FromSystemGeometryTrajectory (outPath, inPath, system):
-    """Convert a SystemGeometryTrajectory to an XTC trajectory."""
-    inTrajectory  = SystemGeometryTrajectory (inPath,  system, mode = "r")
-    outTrajectory = XTCTrajectoryFileWriter  (outPath, system)
-
-    outTrajectory.WriteHeader ()
-    while inTrajectory.RestoreOwnerData (): outTrajectory.WriteOwnerData ()
-
-    inTrajectory.Close  ()
-    outTrajectory.Close ()

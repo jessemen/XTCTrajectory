@@ -8,7 +8,6 @@
 """XTCTrajectoryFileReader is a class for reading XTC trajectories."""
 
 from pCore    import logFile, LogFileActive, CLibraryError
-from pBabel   import SystemGeometryTrajectory
 
 
 cdef class XTCTrajectoryFileReader:
@@ -84,21 +83,6 @@ cdef class XTCTrajectoryFileReader:
                 summary.Stop ()
 
 
-    def ReadFooter (self):
-        """Read the trajectory footer."""
-        pass
-
-
-    def ReadHeader (self):
-        """Read the trajectory header."""
-        pass
-
-
-    def AssignOwnerData (self):
-        """Assign owner data to the trajectory."""
-        pass
-
-
     def RestoreOwnerData (self):
         """Restore data from a frame to the owner."""
         cdef Coordinates3   coordinates3
@@ -124,9 +108,20 @@ cdef class XTCTrajectoryFileReader:
             return True
 
 
+    def ReadFooter (self):
+        """Read the trajectory footer."""
+        pass
+
+    def ReadHeader (self):
+        """Read the trajectory header."""
+        pass
+
+    def AssignOwnerData (self):
+        """Assign owner data to the trajectory."""
+        pass
+
     def __getmodule__ (self):
         return "XTCTrajectory"
-
 
     # The following methods convert C variables to Python objects
     def __len__ (self):     return self._numberOfFrames
@@ -142,18 +137,3 @@ cdef class XTCTrajectoryFileReader:
 
     property message:
         def __get__ (self): return self._errorMessage
-
-
-#===============================================================================
-# Helper functions
-#===============================================================================
-def XTCTrajectory_ToSystemGeometryTrajectory (inPath, outPath, system):
-    """Convert an XTC trajectory to a SystemGeometryTrajectory."""
-    inTrajectory  = XTCTrajectoryFileReader  (inPath,  system)
-    outTrajectory = SystemGeometryTrajectory (outPath, system, mode = "w")
-
-    inTrajectory.ReadHeader ()
-    while inTrajectory.RestoreOwnerData (): outTrajectory.WriteOwnerData ()
-
-    inTrajectory.Close  ()
-    outTrajectory.Close ()
