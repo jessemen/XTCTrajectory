@@ -7,7 +7,9 @@
 #-------------------------------------------------------------------------------
 """Utility functions for the XTCTrajectory module."""
 
-from pBabel   import SystemGeometryTrajectory
+from pBabel                  import SystemGeometryTrajectory
+from XTCTrajectoryFileReader import XTCTrajectoryFileReader
+from XTCTrajectoryFileWriter import XTCTrajectoryFileWriter
 
 
 def XTCTrajectory_ToSystemGeometryTrajectory (inPath, outPath, system):
